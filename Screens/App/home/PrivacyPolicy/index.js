@@ -8,10 +8,10 @@ import {
   BackHandler,
   ScrollView,
 } from 'react-native';
+import {DrawerActions} from '@react-navigation/native';
 import {Right, Left, Body, Header, Input} from 'native-base';
 import styles from './styles';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import {DrawerActions} from 'react-navigation-drawer';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Dropdown from '../../home/Components/Dropdown/dropdown/';
 import {Metrics} from '../../Themes';
@@ -40,7 +40,8 @@ export default class PrivacyPolicy extends Component {
             <TouchableOpacity
               style={styles.backArrow}
               onPress={() =>
-                this.props.navigation.dispatch(DrawerActions.openDrawer())
+                {this.props.navigation.dispatch(DrawerActions.openDrawer());
+                console.log(JSON.stringify(this.props.navigation))}
               }>
               <View style={styles.backView}>
                 <FontAwesome

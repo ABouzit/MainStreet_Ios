@@ -9,86 +9,70 @@
 import React from 'react';
 import {View, StyleSheet, Image} from 'react-native';
 import {Container, Content, Header, Body} from 'native-base';
-import {createSwitchNavigator, createAppContainer} from 'react-navigation';
-import {createDrawerNavigator, DrawerItems} from 'react-navigation-drawer';
 import PrivacyPolicy from './Screens/App/home/PrivacyPolicy/index';
 import ConnexionPage from './Screens/App/home/ConnectionPage/index';
 import LoginPage from './Screens/App/home/LoginPage/index';
 import SignupPage from './Screens/App/home/SignupPage/index';
 import PrendrePhoto from './Screens/App/home/PrendrePhoto/index';
-const CustomDrawerContentComponent = props => {
+import MenuPrincipale from './Screens/App/home/MenuPrincipale/index';
+import ProfilPage from './Screens/App/home/ProfilPage';
+import {createDrawerNavigator} from '@react-navigation/drawer';
+import {NavigationContainer} from '@react-navigation/native';
+
+const Drawer = createDrawerNavigator();
+export default function App() {
+  const [tab, setTab] = React.useState('Recherche');
   return (
-    <Container>
-      <Header style={styles.drawerHeader}>
-        <Body>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'flex-end',
-            }}
-          />
-        </Body>
-      </Header>
-      <Content>
-        <DrawerItems {...props} />
-      </Content>
-    </Container>
+    <NavigationContainer
+      onStateChange={state => console.log('New state is', state.routes[5])}>
+      <Drawer.Navigator initialRouteName="Home">
+        <Drawer.Screen
+          name="Home"
+          component={PrivacyPolicy}
+          title="Privacy policy"
+        />
+        <Drawer.Screen
+          name="ConnexionPage"
+          component={ConnexionPage}
+          title="Connexion page"
+        />
+        <Drawer.Screen
+          name="LoginPage"
+          component={LoginPage}
+          title="Connexion"
+        />
+        <Drawer.Screen
+          name="SignupPage"
+          component={SignupPage}
+          title="Sign up Page"
+        />
+        <Drawer.Screen
+          name="PrendrePhoto"
+          component={PrendrePhoto}
+          title="Prendre Photo page"
+        />
+        <Drawer.Screen
+          name="MenuPrincipale"
+          component={
+            MenuPrincipale
+          }
+          title="Menu Principale"
+        />
+        <Drawer.Screen
+          name="ProfilPage"
+          component={ProfilPage}
+          title="Profil Page"
+        />
+      </Drawer.Navigator>
+    </NavigationContainer>
   );
-};
-
-const AppStack = createDrawerNavigator(
-  {
-    Home: {
-      screen: PrivacyPolicy,
-      navigationOptions: {
-        title: 'Privacy policy',
-      },
-    },
-    ConnexionPage: {
-      screen: ConnexionPage,
-      navigationOptions: {
-        title: 'Connexion page',
-      },
-    },
-    LoginPage: {
-      screen: LoginPage,
-      navigationOptions: {
-        title: 'Log in page',
-      },
-    },
-    SignupPage: {
-      screen: SignupPage,
-      navigationOptions: {
-        title: 'Sign up page',
-      },
-    },
-    PrendrePhoto: {
-      screen: PrendrePhoto,
-      navigationOptions: {
-        title: 'Prendre photo de profile',
-      },
-    },
-  },
-  {
-    drawerPosition: 'left',
-    contentComponent: CustomDrawerContentComponent,
-    backBehavior: 'history',
-  },
-);
-/*const AuthStack = createStackNavigator({ SignIn: { screen: Login }, SignUp: { screen: Registration }, Recup: { screen: RecuperationMotDePasse } },
-  {
-    headerMode: 'none',
-    navigationOptions: {
-      headerVisible: true,
-    }
-  }
-);*/
-
+}
+/*
 export default createAppContainer(
   createSwitchNavigator(
     {
       /* Accueil: AuthStack,
-      //stackdep:stackR,*/
+      //stackdep:stackR,
       Accueil: AppStack,
     },
     {
@@ -96,7 +80,7 @@ export default createAppContainer(
     },
   ),
 );
-
+*/
 const styles = StyleSheet.create({
   container: {
     flex: 1,

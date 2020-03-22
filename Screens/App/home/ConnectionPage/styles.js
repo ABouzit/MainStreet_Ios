@@ -42,8 +42,9 @@ const styles = StyleSheet.create({
 
   logostyle: {
     alignSelf: 'center',
-    width: Metrics.WIDTH * 0.28,
-    height: Metrics.WIDTH * 0.28,
+    width: Metrics.WIDTH * 0.18,
+    height: Metrics.WIDTH * 0.18,
+    marginBottom: Metrics.HEIGHT * 0.02,
   },
   headertext: {
     fontFamily: Fonts.PlayfairDisplayBold,
@@ -57,7 +58,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center',
   },
 
@@ -79,12 +80,15 @@ const styles = StyleSheet.create({
     marginTop: Metrics.HEIGHT * 0.05,
   },
   buttonlogin: {
-    backgroundColor: Colors.white,
+    backgroundColor: 'transparent',
     alignSelf: 'center',
-    height: Metrics.HEIGHT * 0.08,
-    width: Metrics.WIDTH * 0.8,
+    borderWidth: 2,
+    borderColor:'#fed227',
+    height: Metrics.HEIGHT * 0.06,
+    width: Metrics.WIDTH * 0.55,
     alignItems: 'center',
     justifyContent: 'center',
+    marginBottom: Metrics.HEIGHT * 0.15,
   },
 
   buttonsignup: {
@@ -108,7 +112,7 @@ const styles = StyleSheet.create({
   },
   btnText: {
     fontFamily: 'SFUIDisplay-Medium',
-    color: 'black',
+    color: '#fed227',
     fontWeight: 'bold',
   },
   modelCenter: {

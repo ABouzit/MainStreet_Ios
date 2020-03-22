@@ -55,7 +55,7 @@ export default class SignupPage extends Component {
           <Left style={styles.left}>
             <TouchableOpacity
               style={styles.backArrow}
-              onPress={() => this.props.navigation.navigate('Home')}>
+              onPress={() => this.props.navigation.navigate('ProfilPage')}>
               <View style={styles.backView}>
                 <FontAwesome
                   name="angle-left"
@@ -91,8 +91,9 @@ export default class SignupPage extends Component {
                   style={styles.inputemail}
                 />
               </Item>
-              <Item underline style={styles.itemePrenom}>
+              <Item underline  style={styles.itemePrenom}>
                 <Input
+                  
                   placeholderTextColor="#000"
                   textAlign={I18nManager.isRTL ? 'right' : 'left'}
                   placeholder="Prenom"
@@ -110,7 +111,7 @@ export default class SignupPage extends Component {
                 style={styles.inputemail}
               />
             </Item>
-            <Item underline style={styles.itememail}>
+            <Item underline  style={styles.itememail}>
               <Input
                 placeholderTextColor="#000"
                 textAlign={I18nManager.isRTL ? 'right' : 'left'}

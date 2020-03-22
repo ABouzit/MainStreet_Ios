@@ -45,11 +45,11 @@ export default class ConnexionPage extends Component {
       StatusBar.setTranslucent(true);
     }
     let pic = {
-      uri: require('./../../images/_MG_4305-1.jpg'),
+      uri: require('./../../images/Bg2.png'),
     };
 
     let logo13 = {
-      uri: require('./../../images/Logo1.png'),
+      uri: require('./../../images/Logo2.png'),
     };
     return (
       <ImageBackground source={pic.uri} style={styles.screenBg}>
@@ -72,25 +72,14 @@ export default class ConnexionPage extends Component {
         </Header>
         <View style={styles.container}>
           <Image source={logo13.uri} style={styles.logostyle} />
-
-          <Form style={styles.form}>
-            <TouchableOpacity
-              info
-              style={styles.buttonlogin}
-              onPress={() => alert('Sign Up')}>
-              <Text autoCapitalize="words" style={styles.btnText}>
-                SIGN UP
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              info
-              style={styles.buttonsignup}
-              onPress={() => alert('Sign In')}>
-              <Text autoCapitalize="words" style={styles.btnText}>
-                SIGN IN
-              </Text>
-            </TouchableOpacity>
-          </Form>
+          <TouchableOpacity
+            info
+            style={styles.buttonlogin}
+            onPress={() => alert('Sign Up')}>
+            <Text autoCapitalize="words" style={styles.btnText}>
+             CONNEXION
+            </Text>
+          </TouchableOpacity>
         </View>
       </ImageBackground>
     );
