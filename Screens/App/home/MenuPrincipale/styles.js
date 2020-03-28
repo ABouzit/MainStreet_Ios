@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     backgroundColor: Colors.white,
-    height: 70,
+    height: Metrics.HEIGHT * 0.1,
     width: Metrics.WIDTH,
   },
 });

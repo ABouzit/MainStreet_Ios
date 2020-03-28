@@ -1,4 +1,7 @@
-const images = {/*
+const images = {
+  starEmpty1: require('../images/starEmpty1.png'),
+  starFilled1: require('../images/starFilled1.png'),
+  starHalf1: require('../images/starHalf1.png') /*
   drawer_antiquruby_logo: require('../Images/drawer_logo.png'),
   activeCategory: require('../Images/activeCategory.png'),
   activeGift: require('../Images/activeGift.png'),
@@ -157,9 +160,6 @@ const images = {/*
   sliderIcon: require('../Images/sliderIcon.png'),
   sortIcon: require('../Images/sortIcon.png'),
   sport: require('../Images/sport.png'),
-  starEmpty1: require('../Images/starEmpty1.png'),
-  starFilled1: require('../Images/starFilled1.png'),
-  starHalf1: require('../Images/starHalf1.png'),
   timer: require('../Images/timer.png'),
   travel: require('../Images/travel.png'),
   tvStandBlue: require('../Images/tv_stands_blue.png'),
@@ -475,7 +475,7 @@ const images = {/*
   Featured_News_two: require('../Images/Featured_News_two.jpg'),
   RecentPlayed_one: require('../Images/RecentPlayed_one.jpg'),
   RecentPlayed_two: require('../Images/RecentPlayed_two.jpg'),
-  RadioLive: require('../Images/RadioLive.jpg'),*/
+  RadioLive: require('../Images/RadioLive.jpg'),*/,
 };
 
 export default images;

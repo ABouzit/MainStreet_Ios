@@ -4,13 +4,11 @@ import {Fonts, Metrics, Colors} from '../../Themes/';
 const styles = StyleSheet.create({
   btnsec: {
     backgroundColor: 'transparent',
-    height: Metrics.HEIGHT * 0.1,
+    height: Metrics.HEIGHT * 0.09,
     justifyContent: 'center',
-    bottom: Metrics.HEIGHT * 0.0,
     flexDirection: 'row',
     width: Metrics.WIDTH * 0.85,
     alignSelf: 'center',
-    position: 'absolute',
   },
   dot: {
     backgroundColor: 'rgb(212,216,224)',
@@ -52,7 +50,7 @@ const styles = StyleSheet.create({
     paddingVertical: 0, // for custom animation
   },
   carouselContainer: {
-    height: Metrics.HEIGHT * 0.405,
+    height: Metrics.HEIGHT * 0.4,
     width: Metrics.WIDTH,
   },
   slide: {
@@ -62,12 +60,14 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   slide2: {
-    position: 'relative',
+    position: 'absolute',
     alignSelf: 'center',
-    height: Metrics.HEIGHT * 0.4,
-    justifyContent: 'center',
-    marginBottom: Metrics.HEIGHT* 0.15,
-   // flex: 1,
+    bottom: 0,
+    right: 0,
+    left: 0,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    height: Metrics.HEIGHT * 0.38,
+    // flex: 1,
   },
   sliderImage: {
     backgroundColor: 'white',
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
     borderColor: 'rgb(255,213,0)',
   },
   addNewPhotoBotton: {
-    backgroundColor: 'white',
+    backgroundColor: 'transparent',
     width: Metrics.WIDTH * 0.45,
     ...Platform.select({
       ios: {
@@ -177,11 +177,9 @@ const styles = StyleSheet.create({
     }),
     alignSelf: 'center',
     justifyContent: 'center',
-    borderWidth: 2,
-    borderColor: 'rgb(255,213,0)',
   },
   publishBotton: {
-    backgroundColor: 'white',
+    backgroundColor: 'rgb(255,213,0)',
     width: Metrics.WIDTH * 0.25,
     ...Platform.select({
       ios: {
@@ -193,8 +191,6 @@ const styles = StyleSheet.create({
     }),
     alignSelf: 'center',
     justifyContent: 'center',
-    borderWidth: 2,
-    borderColor: 'rgb(255,213,0)',
   },
   nextText: {
     fontFamily: Fonts.type.sfuiDisplayMedium,
@@ -203,7 +199,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: 'bold',
   },
-
+  publishText: {
+    fontFamily: Fonts.type.sfuiDisplayMedium,
+    fontSize: Fonts.moderateScale(15),
+    color: 'black',
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
   skipText: {
     fontFamily: Fonts.type.sfuiDisplayMedium,
     backgroundColor: Colors.transparent,
@@ -219,11 +221,11 @@ const styles = StyleSheet.create({
   },
   containerMap: {
     alignItems: 'center',
-    height: '100%',
+    height: Metrics.HEIGHT * 0.9,
   },
   map: {
     width: Metrics.WIDTH,
-    height: Metrics.HEIGHT * 0.55,
+    height: Metrics.HEIGHT * 0.5,
   },
   containerNew: {
     alignItems: 'center',
@@ -269,13 +271,11 @@ const styles = StyleSheet.create({
     marginTop: -Metrics.HEIGHT * 0.1,
   },
   txtBg: {
-    marginBottom: Metrics.HEIGHT * 0.01,
+   // marginBottom: Metrics.HEIGHT * 0.01,
     marginHorizontal: Metrics.WIDTH * 0.01,
-    borderRadius: Metrics.HEIGHT * 0.006,
-    paddingVertical: Metrics.HEIGHT * 0.02,
-    paddingHorizontal: Metrics.WIDTH * 0.03,
-    borderWidth: 1,
-    borderColor: '#fff',
+    borderRadius: Metrics.HEIGHT * 0.001,
+    paddingVertical: Metrics.HEIGHT * 0.01,
+    paddingHorizontal: Metrics.WIDTH * 0.02,
     justifyContent: 'center',
     shadowOffset: {width: 0, height: 0},
     shadowColor: 'black',
@@ -533,13 +533,13 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   left: {
-    flex: 0.25,
+    flex: 0.1,
   },
   inputRecherche: {
     width: '100%',
   },
   body: {
-    flex: 0.75,
+    flex: 0.9,
     alignItems: 'center',
   },
   textTitle: {
@@ -630,8 +630,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    marginHorizontal: Metrics.WIDTH * 0.1,
-    height: Metrics.HEIGHT * 0.1,
+    marginHorizontal: Metrics.WIDTH * 0.05,
+    height: Metrics.HEIGHT * 0.06,
     paddingRight: Metrics.WIDTH * 0.1,
   },
   listContent2: {
@@ -646,7 +646,14 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     width: Metrics.WIDTH * 0.8,
     height: Metrics.HEIGHT * 0.08,
-    marginBottom: Metrics.HEIGHT*0.02
+    marginBottom: Metrics.HEIGHT * 0.02,
+  },
+  itemAddress: {
+    alignSelf: 'center',
+    width: Metrics.WIDTH * 0.8,
+    height: Metrics.HEIGHT * 0.02,
+    marginVertical: Metrics.HEIGHT * 0.01,
+    marginLeft: -Metrics.WIDTH * 0.1,
   },
   flatListStyle: {
     marginTop: Metrics.HEIGHT * 0,

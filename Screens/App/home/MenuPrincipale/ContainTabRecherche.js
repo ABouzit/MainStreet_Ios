@@ -309,25 +309,7 @@ export default class ContainTabRecherche extends Component {
     return (
       <View style={styles.container}>
         <Header style={styles.header}>
-          <Left style={styles.left}>
-            <TouchableOpacity
-              style={styles.backArrow}
-              onPress={() => {
-                this.props.navigation.dispatch(CommonActions.goBack());
-                console.log(JSON.stringify(this.props.navigation));
-              }}>
-              <View style={styles.backView}>
-                <FontAwesome
-                  name="angle-left"
-                  type="FontAwesome"
-                  size={40}
-                  color="black"
-                  style={styles.arrow}
-                />
-                <Text style={styles.back}>back</Text>
-              </View>
-            </TouchableOpacity>
-          </Left>
+          <Left style={styles.left} />
           <Body style={styles.body}>
             <View style={{flexDirection: 'row'}}>
               <Input

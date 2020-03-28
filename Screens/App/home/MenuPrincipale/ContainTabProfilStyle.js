@@ -44,17 +44,18 @@ const styles = StyleSheet.create({
   },
   content: {
     width: Metrics.WIDTH,
-    height:'100%',
+    height: '100%',
     backgroundColor: 'transparent',
   },
   proimg: {
+    marginTop: Metrics.HEIGHT * 0.1,
     flexDirection: 'row',
     alignSelf: 'center',
   },
   TabsView: {
     borderColor: 'rgb(197,185,121)',
     borderBottomWidth: 1,
-    width: Metrics.WIDTH * 0.9,
+    width: Metrics.WIDTH * 0.8,
     alignSelf: 'center',
   },
   cardLigne: {
@@ -74,7 +75,7 @@ const styles = StyleSheet.create({
   },
   materialTabsView: {
     marginTop: 10,
-    width: '65%',
+    width: Metrics.WIDTH * 0.6,
   },
   inputFieldSec: {
     marginTop: Metrics.HEIGHT * 0.04,
@@ -99,7 +100,7 @@ const styles = StyleSheet.create({
   },
   itememail: {
     alignSelf: 'center',
-    width: Metrics.WIDTH * 0.8,
+    width: Metrics.WIDTH * 0.7,
     height: Metrics.HEIGHT * 0.08,
   },
   itemeNom: {
@@ -121,7 +122,7 @@ const styles = StyleSheet.create({
   },
   itempassword: {
     alignSelf: 'center',
-    width: Metrics.WIDTH * 0.8,
+    width: Metrics.WIDTH * 0.7,
     height: Metrics.HEIGHT * 0.08,
   },
   inputpassword: {
@@ -148,7 +149,22 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.yellow,
     alignSelf: 'center',
     height: Metrics.HEIGHT * 0.06,
-    width: Metrics.WIDTH * 0.8,
+    width: Metrics.WIDTH * 0.7,
+    marginLeft: -Metrics.WIDTH * 0.15,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowOffset: {width: 3, height: 5},
+    shadowColor: 'black',
+    shadowOpacity: 1,
+    shadowRadius: 5,
+    elevation: 3,
+    marginBottom: Metrics.HEIGHT * 0.2,
+  },
+  buttonlogin3: {
+    backgroundColor: Colors.yellow,
+    alignSelf: 'center',
+    height: Metrics.HEIGHT * 0.06,
+    width: Metrics.WIDTH * 0.7,
     alignItems: 'center',
     justifyContent: 'center',
     shadowOffset: {width: 3, height: 5},
@@ -165,7 +181,7 @@ const styles = StyleSheet.create({
     fontSize: Fonts.moderateScale(17),
   },
   suppCompte: {
-    width: Metrics.WIDTH * 0.745,
+    width: Metrics.WIDTH * 0.6,
     alignSelf: 'center',
     flexDirection: 'row',
     height: Metrics.HEIGHT * 0.04,
@@ -180,13 +196,27 @@ const styles = StyleSheet.create({
   },
   card: {
     alignSelf: 'center',
-    width: Metrics.WIDTH * 0.9,
+    width: Metrics.WIDTH * 0.75,
     backgroundColor: 'white',
     shadowOffset: {width: 0, height: 0},
     shadowColor: 'black',
     shadowOpacity: 1,
     shadowRadius: 5,
     elevation: 3,
+    marginLeft: -Metrics.WIDTH * 0.15,
+    //backgroundColor:'green',
+    marginBottom: Metrics.HEIGHT * 0.08,
+  },
+  card2: {
+    alignSelf: 'center',
+    width: Metrics.WIDTH * 0.75,
+    backgroundColor: 'white',
+    shadowOffset: {width: 0, height: 0},
+    shadowColor: 'black',
+    shadowOpacity: 1,
+    shadowRadius: 5,
+    elevation: 3,
+    //backgroundColor:'green',
     marginBottom: Metrics.HEIGHT * 0.08,
   },
   tabView: {},
@@ -309,7 +339,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     alignItems: 'center',
     height: '100%',
-    marginBottom: 20,
   },
 
   desctext: {

@@ -22,7 +22,7 @@ const postImageUri =
 export default class ContainTabFavori extends Component {
   constructor(props) {
     super(props);
-    console.log(props)
+    console.log(props);
     this.state = {
       index: '',
       activeindicator: 0,
@@ -165,38 +165,11 @@ export default class ContainTabFavori extends Component {
     ];
     return (
       <View style={styles.container}>
-        <Header style={styles.header}>
-          <Left style={styles.left}>
-            <TouchableOpacity
-              style={styles.backArrow}
-              onPress={() => {
-                this.props.navigation.dispatch(CommonActions.goBack());
-                console.log(this.props) 
-                this.props.console(
-                /* this.props.navigation.dangerouslyGetState().routes[
-                    this.props.navigation.dangerouslyGetState().routes.length -
-                    1
-                  ].name,
-                */);
-                // this.props.changeBottomTabIndex
-              }}>
-              <View style={styles.backView}>
-                <FontAwesome
-                  name="angle-left"
-                  type="FontAwesome"
-                  size={40}
-                  color="black"
-                  style={styles.arrow}
-                />
-                <Text style={styles.back}>back</Text>
-              </View>
-            </TouchableOpacity>
-          </Left>
-          <Body style={styles.body}>
-            <Text style={{fontWeight: 'bold'}}>Favorie</Text>
-          </Body>
-        </Header>
-        <Container style={{height: Metrics.HEIGHT * 0.83}}>
+        <Container
+          style={{
+            height: Metrics.HEIGHT * 0.9,
+            paddingTop: Metrics.HEIGHT * 0.05,
+          }}>
           <View style={{alignItems: 'center', paddingBottom: 50}}>
             <Text
               style={{

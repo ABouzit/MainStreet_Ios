@@ -85,7 +85,7 @@ export default class MenuPrincipale extends Component {
         <Stack.Screen
           name="ContainTabMap"
           title="Map"
-          component={(props)=><ContainTabMap {...props} />}
+          component={props => <ContainTabMap {...props} />}
         />
         <Stack.Screen
           name="ContainTabNewSpot"

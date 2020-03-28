@@ -91,7 +91,7 @@ export default class ContainTabNewSpot extends Component {
         style={
           this.state.selectedSportLots.includes(item.id)
             ? [styles.musicname, {color: '#fff'}]
-            : [styles.musicname, {color: '#131e7e'}]
+            : [styles.musicname, {color: '#000'}]
         }>
         {' '}
         {item.musicname}
@@ -110,7 +110,7 @@ export default class ContainTabNewSpot extends Component {
         style={
           this.state.selectedTranLots.includes(item.id)
             ? [styles.musicname, {color: '#fff'}]
-            : [styles.musicname, {color: '#131e7e'}]
+            : [styles.musicname, {color: '#000'}]
         }>
         {' '}
         {item.musicname}
@@ -129,7 +129,7 @@ export default class ContainTabNewSpot extends Component {
         style={
           this.state.selectedTimeLots.includes(item.id)
             ? [styles.musicname, {color: '#fff'}]
-            : [styles.musicname, {color: '#131e7e'}]
+            : [styles.musicname, {color: '#000'}]
         }>
         {' '}
         {item.musicname}
@@ -278,169 +278,80 @@ export default class ContainTabNewSpot extends Component {
       <ImageBackground
         source={pic.uri}
         style={[styles.screenBg, ApplicationStyles.backgroundImage]}>
-        <Header style={styles.header}>
-          <Left style={styles.left}>
-            <TouchableOpacity
-              style={styles.backArrow}
-              onPress={() => {
-                this.props.navigation.dispatch(CommonActions.goBack());
-                console.log(JSON.stringify(this.props.navigation));
-              }}>
-              <View style={styles.backView}>
-                <FontAwesome
-                  name="angle-left"
-                  type="FontAwesome"
-                  size={40}
-                  color="black"
-                  style={styles.arrow}
-                />
-                <Text style={styles.back}>back</Text>
-              </View>
-            </TouchableOpacity>
-          </Left>
-          <Body style={styles.body}>
-            <Text>NewSpot</Text>
-          </Body>
-        </Header>
-        <View style={{height: Metrics.HEIGHT * 0.83}}>
+        <View
+          style={{
+            height: Metrics.HEIGHT * 0.9,
+          }}>
           <Swiper
             showsButtons={false}
             autoplay={false}
             loop={false}
-            ref="swiperSlide"
-            index={this.state.indexSlider}
-            activeDot={<View />}
-            dot={<View />}
-            onIndexChanged={index => this.setState({indexSlider: index})}
-            scrollEnabled={false}>
-            <View key={1} style={styles.slide}>
-              <View
-                style={[
-                  SliderEntryStyle.imageContainerI,
-                  {position: 'relative'},
-                ]}>
-                <Swiper
-                  showsButtons={false}
-                  autoplay={false}
-                  loop={false}
-                  ref="swiper"
-                  index={this.state.index}
-                  paginationStyle={{
-                    position: 'absolute',
-                    top: -(Metrics.HEIGHT * 0.22),
-                  }}
-                  activeDot={<View style={styles.activeDot} />}
-                  dot={<View style={styles.dot} />}
-                  onIndexChanged={index => this.setState({index})}>
-                  {data2.map((image, index) => {
-                    return (
-                      <View
-                        style={{
-                          alignItems: 'center',
-                        }}
-                        key={index}>
-                        <SliderEntry
-                          data={image}
-                          parallax={false}
-                          containerStyle={SliderEntryStyle.imageContainerI}
-                          imageStyle={SliderEntryStyle.image}
-                          imageContainer={SliderEntryStyle.imageContainerI}
-                          type="Image"
-                        />
-                      </View>
-                    );
-                  })}
-                </Swiper>
-
-                <TouchableOpacity
-                  onPress={() => this.refs.swiper.scrollBy(1)}
+            ref="swiper"
+            index={this.state.index}
+            paginationStyle={{
+              position: 'absolute',
+              top: -(Metrics.HEIGHT * 0.22),
+            }}
+            activeDot={<View style={styles.activeDot} />}
+            dot={<View style={styles.dot} />}
+            onIndexChanged={index => this.setState({index})}>
+            {data2.map((image, index) => {
+              return (
+                <View
                   style={{
-                    backgroundColor: 'rgb(49,49,49)',
-                    position: 'absolute',
-                    height: 50,
-                    width: 50,
-                    borderRadius: 50,
-                    bottom: -25,
-                    alignSelf: 'center',
-                    justifyContent: 'center',
-                  }}>
-                  <AntDesign
-                    name="plus"
-                    size={25}
-                    color="#fff"
-                    style={{alignSelf: 'center'}}
+                    alignItems: 'center',
+                  }}
+                  key={index}>
+                  <SliderEntry
+                    data={image}
+                    parallax={false}
+                    containerStyle={SliderEntryStyle.imageContainerMap}
+                    imageStyle={SliderEntryStyle.image}
+                    imageContainer={SliderEntryStyle.imageContainerMap}
+                    type="Image"
                   />
-                </TouchableOpacity>
-              </View>
-
-              <Text style={styles.headertext}>add a spot</Text>
-              <Text style={styles.desctext}>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              </Text>
-              <View style={styles.btnsec}>
-                <TouchableOpacity
-                  onPress={() => this.refs.swiperSlide.scrollBy(1)}
-                  style={styles.nextBotton}>
-                  <Text style={styles.nextText}>NEXT</Text>
-                </TouchableOpacity>
-              </View>
+                </View>
+              );
+            })}
+          </Swiper>
+          <View style={styles.slide2}>
+            <View style={{height: Metrics.HEIGHT * 0.08, width: Metrics.WIDTH}}>
+              <Input
+                placeholderTextColor="rgb(159,159,159)"
+                textAlign={I18nManager.isRTL ? 'right' : 'left'}
+                placeholder="Tappez l'adresse du spot"
+                keyboardType="default"
+                style={styles.itemAddress}
+                onChangeText={LocationValue => this.setState({LocationValue})}
+                value={this.state.LocationValue}
+              />
             </View>
-            <View key={2} style={styles.slide}>
-              <View style={styles.slide2}>
-                <Item underline style={styles.itememail}>
-                  {this.state.LocationValue === '' ? (
-                    <Ionicons
-                      active
-                      name="md-pin"
-                      size={35}
-                      style={{
-                        width: 40,
-                        color: 'rgb(159,159,159)',
-                      }}
-                    />
-                  ) : (
-                    () => {
-                      return '';
-                    }
-                  )}
-                  <Input
-                    placeholderTextColor="#000"
-                    textAlign={I18nManager.isRTL ? 'right' : 'left'}
-                    placeholder="Tappez l'adresse du spot"
-                    keyboardType="default"
-                    style={styles.inputemail}
-                    onChangeText={LocationValue =>
-                      this.setState({LocationValue})
-                    }
-                    value={this.state.LocationValue}
-                  />
-                </Item>
-                <FlatList
-                  contentContainerStyle={styles.listContent}
-                  data={sportData}
-                  keyExtractor={sportData => sportData.id}
-                  renderItem={this._renderSportItem}
-                  horizontal
-                  showsHorizontalScrollIndicator={false}
-                />
-                <FlatList
-                  contentContainerStyle={styles.listContent}
-                  data={tranData}
-                  keyExtractor={tranData => tranData.id}
-                  renderItem={this._renderTranItem}
-                  horizontal
-                  showsHorizontalScrollIndicator={false}
-                />
-                <FlatList
-                  contentContainerStyle={styles.listContent}
-                  data={timingData}
-                  keyExtractor={timingData => timingData.id}
-                  renderItem={this._renderTimeItem}
-                  horizontal
-                  showsHorizontalScrollIndicator={false}
-                />
-              </View>
+            <View style={{height: Metrics.HEIGHT * 0.3, width: Metrics.WIDTH}}>
+              <FlatList
+                contentContainerStyle={styles.listContent}
+                data={sportData}
+                keyExtractor={sportData => sportData.id}
+                renderItem={this._renderSportItem}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+              />
+              <FlatList
+                contentContainerStyle={styles.listContent}
+                data={tranData}
+                keyExtractor={tranData => tranData.id}
+                renderItem={this._renderTranItem}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+              />
+              <FlatList
+                contentContainerStyle={styles.listContent}
+                data={timingData}
+                keyExtractor={timingData => timingData.id}
+                renderItem={this._renderTimeItem}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+              />
+
               <View style={styles.btnsec}>
                 <TouchableOpacity
                   onPress={() => this.refs.swiperSlide.scrollBy(-1)}
@@ -464,11 +375,11 @@ export default class ContainTabNewSpot extends Component {
                 <TouchableOpacity
                   onPress={() => this.refs.swiperSlide.scrollBy(1)}
                   style={styles.publishBotton}>
-                  <Text style={styles.nextText}>PUBLISH</Text>
+                  <Text style={styles.publishText}>PUBLISH</Text>
                 </TouchableOpacity>
               </View>
             </View>
-          </Swiper>
+          </View>
         </View>
       </ImageBackground>
     );

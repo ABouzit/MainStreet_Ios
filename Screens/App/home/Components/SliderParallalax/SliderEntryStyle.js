@@ -62,12 +62,24 @@ export default StyleSheet.create({
     borderTopRightRadius: entryBorderRadius,
   },
   imageContainerI: {
-    height: Metrics.HEIGHT * 0.4,
-    width: Metrics.WIDTH * 0.9,
+    height: Metrics.HEIGHT * 0.5,
+    width: Metrics.WIDTH * 0.95,
     marginBottom: IS_IOS ? 0 : -1, // Prevent a random Android rendering issue
     backgroundColor: 'white',
-    borderTopLeftRadius: entryBorderRadius,
-    borderTopRightRadius: entryBorderRadius,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
+  },
+  imageContainerMap: {
+    height: Metrics.HEIGHT * 0.96,
+    width: Metrics.WIDTH * 0.98,
+    marginBottom: IS_IOS ? 0 : -1, // Prevent a random Android rendering issue
+    backgroundColor: 'white',
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
   },
   imageContainerRecherche: {
     height: slideHeightRecherche,
@@ -94,6 +106,15 @@ export default StyleSheet.create({
     borderRadius: IS_IOS ? entryBorderRadius : 0,
     borderTopLeftRadius: entryBorderRadius,
     borderTopRightRadius: entryBorderRadius,
+  },
+  imageI: {
+    ...StyleSheet.absoluteFillObject,
+    resizeMode: 'cover',
+    borderRadius: IS_IOS ? entryBorderRadius : 0,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
   },
   viewDescVille: {
     flexDirection: 'row',
