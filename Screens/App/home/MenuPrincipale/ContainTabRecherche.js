@@ -3,6 +3,7 @@ import {
   Text,
   StatusBar,
   Platform,
+  Dimensions,
   TouchableOpacity,
   FlatList,
   View,
@@ -56,6 +57,7 @@ const profileImageNine =
 
 export default class ContainTabRecherche extends Component {
   constructor(props) {
+console.log(JSON.stringify(Dimensions))
     super(props);
     this.state = {
       index: '',
@@ -209,7 +211,7 @@ export default class ContainTabRecherche extends Component {
     }
   }
   render() {
-    StatusBar.setBarStyle('light-content', true);
+    StatusBar.setBarStyle('dark-content', true);
     if (Platform.OS === 'android') {
       StatusBar.setBackgroundColor('transparent', true);
       StatusBar.setTranslucent(true);
@@ -308,7 +310,7 @@ export default class ContainTabRecherche extends Component {
 
     return (
       <View style={styles.container}>
-        <Header style={styles.header}>
+        <Header androidStatusBarColor={'#000'} style={styles.header}>
           <Left style={styles.left} />
           <Body style={styles.body}>
             <View style={{flexDirection: 'row'}}>
@@ -344,7 +346,7 @@ export default class ContainTabRecherche extends Component {
           <View
             style={{
               position: 'absolute',
-              top: Metrics.HEIGHT * 0.13,
+              top: Metrics.HEIGHT * 0.153,
               zIndex: 500,
               width: Metrics.WIDTH,
               backgroundColor: 'white',
@@ -382,7 +384,7 @@ export default class ContainTabRecherche extends Component {
             <View
               style={{
                 position: 'absolute',
-                top: Metrics.HEIGHT * 0,
+                top: Metrics.HEIGHT * 0.012,
                 zIndex: 1000,
                 width: Metrics.WIDTH,
                 backgroundColor: 'white',

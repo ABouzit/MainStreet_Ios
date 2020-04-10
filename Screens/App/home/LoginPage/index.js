@@ -37,7 +37,7 @@ export default class LoginPage extends Component {
   }
 
   render() {
-    StatusBar.setBarStyle('light-content', true);
+    StatusBar.setBarStyle('dark-content', true);
     if (Platform.OS === 'android') {
       StatusBar.setBackgroundColor('transparent', true);
       StatusBar.setTranslucent(true);

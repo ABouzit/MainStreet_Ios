@@ -7,9 +7,10 @@ import {
   TouchableHighlight,
   BackHandler,
   ScrollView,
+  StatusBar
 } from 'react-native';
 import {DrawerActions} from '@react-navigation/native';
-import {Right, Left, Body, Header, Input} from 'native-base';
+import {Right, Left, Body, Header, Input, Container} from 'native-base';
 import styles from './styles';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -33,9 +34,16 @@ export default class PrivacyPolicy extends Component {
   }
 
   render() {
+  
+    /*
+    StatusBar.setBarStyle('dark-content', true);
+      StatusBar.setBackgroundColor('rgba(0,0,0,0.5)', true);
+      StatusBar.setTranslucent(true);
+    */
     return (
-      <View style={styles.main}>
-        <Header androidStatusBarColor={'#0e1130'} style={styles.header}>
+      <Container style={styles.main}>
+        
+        <Header androidStatusBarColor={'#000'} style={styles.header}>
           <Left style={styles.left}>
             <TouchableOpacity
               style={styles.backArrow}
@@ -123,7 +131,7 @@ export default class PrivacyPolicy extends Component {
             </Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </Container>
     );
   }
 }

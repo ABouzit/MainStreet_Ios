@@ -157,7 +157,7 @@ export default class ContainTabProfile extends Component {
     this.setState(frag);
   }
   render() {
-    StatusBar.setBarStyle('light-content', true);
+    StatusBar.setBarStyle('dark-content', true);
 
     if (Platform.OS === 'android') {
       StatusBar.setBackgroundColor('transparent', true);
@@ -797,14 +797,14 @@ export default class ContainTabProfile extends Component {
                       paddingLeft: Metrics.WIDTH * 0.05,
                       paddingTop: Metrics.WIDTH * 0.1,
                     }}>
-                    <Text style={{fontWeight: 'bold', fontSize: 20}}>
+                    <Text style={{fontWeight: 'bold', fontSize: 17}}>
                       {this.state.profil.pseudo}
                     </Text>
                     <View style={{flexDirection: 'row'}}>
                       <Text
                         style={{
                           fontWeight: 'bold',
-                          fontSize: 25,
+                          fontSize: 20,
                           color: 'rgb(248,223,81)',
                         }}>
                         {this.state.profil.spots.length}
@@ -812,7 +812,7 @@ export default class ContainTabProfile extends Component {
                       <Text
                         style={{
                           fontWeight: 'bold',
-                          fontSize: 25,
+                          fontSize: 20,
                           marginLeft: 10,
                         }}>
                         SPOTS
@@ -839,7 +839,7 @@ export default class ContainTabProfile extends Component {
                     fontWeight: 'bold',
                     fontSize: 15,
                     color: 'rgb(248,223,81)',
-                    paddingHorizontal: 10,
+                    paddingHorizontal: 5,
                   }}>
                   {this.state.profil.nbrFolowers}
                 </Text>
@@ -851,7 +851,7 @@ export default class ContainTabProfile extends Component {
                     fontWeight: 'bold',
                     fontSize: 15,
                     color: 'rgb(248,223,81)',
-                    paddingHorizontal: 10,
+                    paddingHorizontal: 5,
                   }}>
                   {this.state.profil.nbrFolowing}
                 </Text>
@@ -864,7 +864,7 @@ export default class ContainTabProfile extends Component {
                     fontSize: 15,
                     color: 'rgb(248,223,81)',
 
-                    paddingHorizontal: 10,
+                    paddingHorizontal: 5,
                   }}>
                   {this.state.profil.likes}
                 </Text>

@@ -31,7 +31,7 @@ export default class ContainTabFavori extends Component {
   }
 
   render() {
-    StatusBar.setBarStyle('light-content', true);
+    StatusBar.setBarStyle('dark-content', true);
     if (Platform.OS === 'android') {
       StatusBar.setBackgroundColor('transparent', true);
       StatusBar.setTranslucent(true);
@@ -170,13 +170,15 @@ export default class ContainTabFavori extends Component {
             height: Metrics.HEIGHT * 0.9,
             paddingTop: Metrics.HEIGHT * 0.05,
           }}>
-          <View style={{alignItems: 'center', paddingBottom: 50}}>
+          <View style={{alignItems: 'center', height:Metrics.HEIGHT*0.25}}>
             <Text
               style={{
                 fontSize: 25,
                 width: Metrics.WIDTH * 0.9,
                 fontWeight: 'bold',
                 textAlign: 'left',
+                marginTop: Metrics.HEIGHT * 0.01,
+                marginBottom: Metrics.HEIGHT * 0.02
               }}>
               PUBLISHERS
             </Text>
@@ -202,16 +204,21 @@ export default class ContainTabFavori extends Component {
               horizontal
               showsHorizontalScrollIndicator={false}
             />
-            <Text
+            </View>
+            
+            <View style={[styles.rowMainView, {height: Metrics.HEIGHT * 0.6,alignItems:'center'}]}>
+              <Text
               style={{
                 fontSize: 25,
                 width: Metrics.WIDTH * 0.9,
                 fontWeight: 'bold',
                 textAlign: 'left',
+                marginTop:Metrics.HEIGHT*0.01,
+                marginBottom:Metrics.HEIGHT*0.05,
+
               }}>
               FAVORITE SPORTS
             </Text>
-            <View style={[styles.rowMainView, {height: Metrics.HEIGHT * 0.51}]}>
               <Swiper
                 showsButtons={false}
                 autoplay={false}
@@ -220,7 +227,7 @@ export default class ContainTabFavori extends Component {
                 index={this.state.indexSlider}
                 paginationStyle={{
                   position: 'absolute',
-                  bottom: -(Metrics.HEIGHT * 0.1),
+                  bottom: -(Metrics.HEIGHT * 0.05),
                 }}
                 activeDot={<View style={styles.activeDot2} />}
                 dot={<View style={styles.dot2} />}
@@ -234,19 +241,19 @@ export default class ContainTabFavori extends Component {
                         data={item}
                         containerStyle={SliderEntryStyle.imageContainer}
                         imageStyle={SliderEntryStyle.image}
-                        imageContainer={SliderEntryStyle.imageContainerFavorite}
+                        imageContainer={SliderEntryStyle.imageContainer}
                         slideInnerContainer={
-                          SliderEntryStyle.slideInnerContainerFavorite
+                          SliderEntryStyle.slideInnerContainer
                         }
-                        textContainer={SliderEntryStyle.textContainerRecherche}
-                        type={'Recherche'}
+                        textContainer={SliderEntryStyle.textContainer}
+                       // type={'Recherche'}
                       />
                     </View>
                   );
                 })}
               </Swiper>
             </View>
-          </View>
+          
         </Container>
       </View>
     );

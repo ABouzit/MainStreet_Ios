@@ -10,12 +10,21 @@
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
-@import GoogleMaps;
+#import <GoogleMaps/GoogleMaps.h>
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   [GMSServices provideAPIKey:@"AIzaSyBf6r0tpxhbsdUi4Q5TEKdzJqlSqF6QFlk"];
+  NSURL *jsCodeLocation;
+  for (NSString* family in [UIFont familyNames])
+{
+ NSLog(@"%@", family);
+ for (NSString* name in [UIFont fontNamesForFamilyName: family])
+ {
+ NSLog(@" %@", name);
+ }
+}  
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
                                                    moduleName:@"Mainstreet"

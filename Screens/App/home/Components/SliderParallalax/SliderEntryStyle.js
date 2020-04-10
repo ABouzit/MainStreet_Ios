@@ -63,11 +63,11 @@ export default StyleSheet.create({
   },
   imageContainerI: {
     height: Metrics.HEIGHT * 0.5,
-    width: Metrics.WIDTH * 0.95,
+    width: Metrics.WIDTH * 0.98,
     marginBottom: IS_IOS ? 0 : -1, // Prevent a random Android rendering issue
     backgroundColor: 'white',
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 0,
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
   },
@@ -111,8 +111,6 @@ export default StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     resizeMode: 'cover',
     borderRadius: IS_IOS ? entryBorderRadius : 0,
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
   },

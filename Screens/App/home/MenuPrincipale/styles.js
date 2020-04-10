@@ -10,8 +10,7 @@ const styles = StyleSheet.create({
   },
   header: {
     zIndex: 1000,
-    marginTop: Metrics.HEIGHT * 0.03,
-    height: Metrics.HEIGHT * 0.1,
+    height: Metrics.HEIGHT * 0.07,
     backgroundColor: '#fff',
     borderBottomWidth: 0,
     paddingLeft: Metrics.WIDTH * 0.05,
@@ -155,6 +154,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     height: Metrics.HEIGHT * 0.1,
     width: Metrics.WIDTH,
+    backgroundColor:'white'
   },
 });
 

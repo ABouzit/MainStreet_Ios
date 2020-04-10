@@ -399,7 +399,6 @@ const styles = StyleSheet.create({
   rowMainView: {
     width: Metrics.WIDTH,
     backgroundColor: 'white',
-    marginTop: Metrics.HEIGHT * 0.03,
   },
   rowHeaderView: {
     flexDirection: 'row',
@@ -504,7 +503,6 @@ const styles = StyleSheet.create({
   },
   header: {
     zIndex: 1000,
-    marginTop: Metrics.HEIGHT * 0.03,
     height: Metrics.HEIGHT * 0.1,
     width: Metrics.WIDTH,
     backgroundColor: '#fff',
@@ -516,21 +514,20 @@ const styles = StyleSheet.create({
   linearGradient: {
     borderRadius: 100,
     position: 'absolute',
-    top: Metrics.HEIGHT * 0.022,
+    top: Metrics.HEIGHT * 0.011,
     width: Metrics.WIDTH * 0.9,
     height: Metrics.HEIGHT * 0.003,
   },
   slider: {
     zIndex: 1000,
-    height: Metrics.HEIGHT * 0.05,
+    height: Metrics.HEIGHT * 0.03,
     width: Metrics.WIDTH * 0.9,
     alignSelf: 'center',
     justifyContent: 'flex-start',
     marginBottom: Metrics.HEIGHT * 0.02,
   },
   sliderTrack: {
-    height: Metrics.HEIGHT * 0.003,
-    backgroundColor: 'transparent',
+    height: Metrics.HEIGHT * 0.025,
   },
   left: {
     flex: 0.1,
@@ -639,7 +636,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginHorizontal: Metrics.WIDTH * 0.1,
-    height: Metrics.HEIGHT * 0.13,
+    height: Metrics.HEIGHT * 0.15,
     paddingRight: Metrics.WIDTH * 0.1,
   },
   itememail: {

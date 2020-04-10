@@ -114,7 +114,7 @@ export default class MenuPrincipale extends Component {
     return (
       <Container style={styles.main}>
         {this.renderSelectedTab()}
-        <Footer>
+        <View style={{flexDirection:'row'}}>
           <FooterTab style={styles.footerTabBg}>
             {this.state.selectedTab == 'Recherche' ? (
               <TouchableOpacity
@@ -137,7 +137,6 @@ export default class MenuPrincipale extends Component {
                       styles.activeTabText,
                       {backgroundColor: 'transparent'},
                     ]}>
-                    {' '}
                     Recherche
                   </Text>
                 </View>
@@ -337,7 +336,7 @@ export default class MenuPrincipale extends Component {
               </TouchableOpacity>
             )}
           </FooterTab>
-        </Footer>
+        </View>
       </Container>
     );
   }

@@ -8,7 +8,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
   },
   header: {
-    marginTop: Metrics.HEIGHT * 0.03,
     height: Metrics.HEIGHT * 0.1,
     backgroundColor: '#fff',
     borderBottomWidth: 0,
@@ -45,7 +44,7 @@ const styles = StyleSheet.create({
   content: {
     width: Metrics.WIDTH,
     height: '100%',
-    backgroundColor: 'transparent',
+    backgroundColor: 'white',
   },
   proimg: {
     marginTop: Metrics.HEIGHT * 0.1,

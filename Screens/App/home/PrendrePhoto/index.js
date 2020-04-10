@@ -44,7 +44,7 @@ export default class PrendrePhoto extends Component {
   }
 
   render() {
-    StatusBar.setBarStyle('light-content', true);
+    StatusBar.setBarStyle('dark-content', true);
     if (Platform.OS === 'android') {
       StatusBar.setBackgroundColor('transparent', true);
       StatusBar.setTranslucent(true);
@@ -52,7 +52,7 @@ export default class PrendrePhoto extends Component {
 
     return (
       <Container>
-        <Header style={styles.header}>
+        <Header  androidStatusBarColor={'#000'} style={styles.header}>
           <Left style={styles.left}>
             <TouchableOpacity
               style={styles.backArrow}

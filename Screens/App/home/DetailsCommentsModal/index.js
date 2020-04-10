@@ -58,7 +58,7 @@ class DetailsCommentsModal extends Component {
   }
 
   render() {
-    StatusBar.setBarStyle('light-content', true);
+    StatusBar.setBarStyle('dark-content', true);
     if (Platform.OS === 'android') {
       StatusBar.setBackgroundColor('transparent', true);
       StatusBar.setTranslucent(true);
@@ -123,7 +123,7 @@ class DetailsCommentsModal extends Component {
     data2.push({});
     return (
       <Container style={styles.main}>
-        <Content>
+        <ScrollView>
           <View
             style={{
               height: Metrics.HEIGHT * 0.5,
@@ -308,7 +308,7 @@ class DetailsCommentsModal extends Component {
               );
             })}
           </View>
-        </Content>
+          </ScrollView>
       </Container>
     );
   }

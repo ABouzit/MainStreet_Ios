@@ -6,7 +6,6 @@ const styles = StyleSheet.create({
     height: Metrics.HEIGHT,
   },
   header: {
-    marginTop: Metrics.HEIGHT * 0.03,
     backgroundColor: '#fff',
     height: Metrics.HEIGHT * 0.1,
     borderBottomWidth: 0,
