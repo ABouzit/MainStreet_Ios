@@ -54,7 +54,6 @@
 		C8E97B7A240AE6C1000D974B /* SFUIDisplay-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C8E97B22240ADF49000D974B /* SFUIDisplay-Semibold.ttf */; };
 		C8E97B7B240AE6C1000D974B /* SFUIDisplay-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C8E97B1A240ADF46000D974B /* SFUIDisplay-Thin.ttf */; };
 		C8E97B7C240AE6C1000D974B /* Steelworks_Vintage_Demo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C8E97B1E240ADF47000D974B /* Steelworks_Vintage_Demo.ttf */; };
-		C8ED3570243E718A00457979 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8ED356F243E718A00457979 /* StoreKit.framework */; };
 		CFD474CA9D17F3FAF93B28E0 /* libPods-Mainstreet-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 82045667CCFE329AC33A01A2 /* libPods-Mainstreet-tvOSTests.a */; };
 		FD57FC1CC363CAE640AF2ADE /* libPods-Mainstreet-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 96D747D1D15815ED9A9613CA /* libPods-Mainstreet-tvOS.a */; };
 /* End PBXBuildFile section */
@@ -153,7 +152,6 @@
 		C8E97B20240ADF48000D974B /* Raleway-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Raleway-Bold.ttf"; path = "../../../Fonts/Raleway-Bold.ttf"; sourceTree = "<group>"; };
 		C8E97B21240ADF48000D974B /* SF-UI-Display-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SF-UI-Display-Bold.ttf"; path = "../../../Fonts/SF-UI-Display-Bold.ttf"; sourceTree = "<group>"; };
 		C8E97B22240ADF49000D974B /* SFUIDisplay-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SFUIDisplay-Semibold.ttf"; path = "../../../Fonts/SFUIDisplay-Semibold.ttf"; sourceTree = "<group>"; };
-		C8ED356F243E718A00457979 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		D764D08AB93CF5C663F8DC54 /* Pods-Mainstreet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mainstreet.debug.xcconfig"; path = "Target Support Files/Pods-Mainstreet/Pods-Mainstreet.debug.xcconfig"; sourceTree = "<group>"; };
 		E9495D580A56BA0D0F849678 /* Pods-MainstreetTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MainstreetTests.debug.xcconfig"; path = "Target Support Files/Pods-MainstreetTests/Pods-MainstreetTests.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -174,7 +172,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				45529EBFAEC40B1EFC2058A5 /* libPods-Mainstreet.a in Frameworks */,
-				C8ED3570243E718A00457979 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -231,7 +228,6 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				C8ED356F243E718A00457979 /* StoreKit.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
 				9F58E7444830CE940D9DFD32 /* libPods-Mainstreet.a */,
@@ -890,7 +886,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.mainstreet;
 				PRODUCT_NAME = Mainstreet;
-				PROVISIONING_PROFILE_SPECIFIER = "alae's certificate";
+				PROVISIONING_PROFILE_SPECIFIER = mainstreetMainProfile;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -913,7 +909,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.mainstreet;
 				PRODUCT_NAME = Mainstreet;
-				PROVISIONING_PROFILE_SPECIFIER = "alae's certificate";
+				PROVISIONING_PROFILE_SPECIFIER = "new one";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
