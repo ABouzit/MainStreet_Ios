@@ -1,8 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="com.mainstreet">
+  package="com.mainstreetspot.android">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <application
       android:name=".MainApplication"
       android:label="@string/app_name"
@@ -25,7 +27,8 @@
       <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
       <meta-data
       android:name="com.google.android.geo.API_KEY"
-      android:value="AIzaSyBf6r0tpxhbsdUi4Q5TEKdzJqlSqF6QFlk"/>
+      android:value="AIzaSyAbFOvj-JQTOGCT3Kf5_3T1cyw06jpKyhA" />
     </application>
 
 </manifest>
+<!-- android:value="AIzaSyBf6r0tpxhbsdUi4Q5TEKdzJqlSqF6QFlk"/> -->

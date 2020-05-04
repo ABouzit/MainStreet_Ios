@@ -10,6 +10,7 @@ import {
   BackHandler,
   I18nManager,
   ImageBackground,
+  ActivityIndicator,
 } from 'react-native';
 import {
   Input,
@@ -36,6 +37,12 @@ import ContainTabNewSpot from './ContainTabNewSpot.js';
 import ContainTabFavori from './ContainTabFavori.js';
 import ContainTabProfile from './ContainTabProfile.js';
 import {createStackNavigator} from '@react-navigation/stack';
+import {
+  subscriber,
+  subscriberRedirect,
+  messageService,
+  subscriberDrawerProfil,
+} from './../../services/messageService';
 
 const Stack = createStackNavigator();
 /**const Stack = createStackNavigator();
@@ -46,12 +53,45 @@ export default class MenuPrincipale extends Component {
     super(props);
     this.state = {
       selectedTab: 'Recherche',
+      chargement: false,
     };
+    subscriber.subscribe(v => {
+      this.setState({chargement: v});
+    });
+    subscriberRedirect.subscribe(v => {
+      if (v) {
+        this.redirectFunction(v);
+      }
+    });
   }
-
+  redirectFunction(string) {
+    if (string === 'Recherche') {
+      if (this.state.selectedTab === 'Profile') {
+        this.setState({selectedTab: 'Recherche'}, () =>
+          this.props.navigation.navigate('ContainTabRecherche'),
+        );
+      }
+    } else if (string === 'Map') {
+      this.setState({selectedTab: 'Map', filterOn: false}, () =>
+        this.props.navigation.navigate('ContainTabMap'),
+      );
+    } else if (string === 'NewSpot') {
+      this.setState({selectedTab: 'NewSpot', filterOn: false}, () =>
+        this.props.navigation.navigate('ContainTabNewSpot'),
+      );
+    } else if (string === 'Favorie') {
+      this.setState({selectedTab: 'Favorie', filterOn: false}, () =>
+        this.props.navigation.navigate('ContainTabFavori'),
+      );
+    } else if (string === 'Profile') {
+      this.setState({selectedTab: 'Profile', filterOn: false}, () =>
+        this.props.navigation.navigate('ContainTabProfile'),
+      );
+    }
+  }
   renderSelectedTab() {
     /*
-    switch (this.state.selectedTab) {
+    switch (this.state.selectedTazb) {
       case 'Recherche':
         return (
           <ContainTabRecherche
@@ -85,7 +125,7 @@ export default class MenuPrincipale extends Component {
         <Stack.Screen
           name="ContainTabMap"
           title="Map"
-          component={props => <ContainTabMap {...props} />}
+          component={ContainTabMap}
         />
         <Stack.Screen
           name="ContainTabNewSpot"
@@ -114,7 +154,7 @@ export default class MenuPrincipale extends Component {
     return (
       <Container style={styles.main}>
         {this.renderSelectedTab()}
-        <View style={{flexDirection:'row'}}>
+        <View style={{flexDirection: 'row'}}>
           <FooterTab style={styles.footerTabBg}>
             {this.state.selectedTab == 'Recherche' ? (
               <TouchableOpacity
@@ -337,6 +377,38 @@ export default class MenuPrincipale extends Component {
             )}
           </FooterTab>
         </View>
+        {this.state.chargement ? (
+          <View
+            style={{
+              height: Metrics.HEIGHT * 1.05,
+              width: Metrics.WIDTH,
+              position: 'absolute',
+              right: 0,
+              top: 0,
+              bottom: 0,
+              left: 0,
+              backgroundColor: 'rgba(0,0,0,0.7)',
+              elevation: 4,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <ActivityIndicator
+              animating={true}
+              color="#fff"
+              size="large"
+              style={{
+                activityIndicator: {
+                  flex: 1,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  height: 80,
+                },
+              }}
+            />
+          </View>
+        ) : (
+          <View />
+        )}
       </Container>
     );
   }

@@ -1,4 +1,4 @@
-package com.mainstreet;
+package com.mainstreetspot.android;
 
 import com.facebook.react.ReactActivity;
 

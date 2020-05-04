@@ -50,7 +50,14 @@ const styles = StyleSheet.create({
     paddingVertical: 0, // for custom animation
   },
   carouselContainer: {
-    height: Metrics.HEIGHT * 0.4,
+    ...Platform.select({
+      ios: {
+        height: Metrics.HEIGHT * 0.4,
+      },
+      android: {
+        height: Metrics.HEIGHT * 0.43,
+      },
+    }),
     width: Metrics.WIDTH,
   },
   slide: {
@@ -221,11 +228,25 @@ const styles = StyleSheet.create({
   },
   containerMap: {
     alignItems: 'center',
-    height: Metrics.HEIGHT * 0.9,
+    ...Platform.select({
+      ios: {
+        height: Metrics.HEIGHT * 0.9,
+      },
+      android: {
+        height: Metrics.HEIGHT * 0.96,
+      },
+    }),
   },
   map: {
     width: Metrics.WIDTH,
-    height: Metrics.HEIGHT * 0.5,
+    ...Platform.select({
+      ios: {
+        height: Metrics.HEIGHT * 0.5,
+      },
+      android: {
+        height: Metrics.HEIGHT * 0.53,
+      },
+    }),
   },
   containerNew: {
     alignItems: 'center',
@@ -271,7 +292,7 @@ const styles = StyleSheet.create({
     marginTop: -Metrics.HEIGHT * 0.1,
   },
   txtBg: {
-   // marginBottom: Metrics.HEIGHT * 0.01,
+    // marginBottom: Metrics.HEIGHT * 0.01,
     marginHorizontal: Metrics.WIDTH * 0.01,
     borderRadius: Metrics.HEIGHT * 0.001,
     paddingVertical: Metrics.HEIGHT * 0.01,
@@ -502,8 +523,19 @@ const styles = StyleSheet.create({
     height: 5,
   },
   header: {
+    ...Platform.select({
+      ios: {
+        marginTop: Metrics.HEIGHT * 0,
+
+        height: Metrics.HEIGHT * 0.1,
+      },
+      android: {
+        marginTop: Metrics.HEIGHT * 0.03,
+
+        height: Metrics.HEIGHT * 0.13,
+      },
+    }),
     zIndex: 1000,
-    height: Metrics.HEIGHT * 0.1,
     width: Metrics.WIDTH,
     backgroundColor: '#fff',
     borderBottomWidth: 0,
@@ -647,6 +679,7 @@ const styles = StyleSheet.create({
   },
   itemAddress: {
     alignSelf: 'center',
+    color: 'white',
     width: Metrics.WIDTH * 0.8,
     height: Metrics.HEIGHT * 0.02,
     marginVertical: Metrics.HEIGHT * 0.01,

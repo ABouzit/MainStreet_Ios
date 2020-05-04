@@ -16,10 +16,11 @@ import styles from './ContainTabStyle';
 import Swiper from 'react-native-swiper';
 import SliderEntry from './../Components/SliderParallalax/SliderEntry';
 import {ApplicationStyles, Metrics} from '../../Themes';
+
 const activeindicator = 0;
 const postImageUri =
   'https://antiqueruby.aliansoftware.net//Images/social/ic_post_sone.png';
-export default class ContainTabFavori extends Component {
+class ContainTabFavori extends Component {
   constructor(props) {
     super(props);
     console.log(props);
@@ -170,7 +171,7 @@ export default class ContainTabFavori extends Component {
             height: Metrics.HEIGHT * 0.9,
             paddingTop: Metrics.HEIGHT * 0.05,
           }}>
-          <View style={{alignItems: 'center', height:Metrics.HEIGHT*0.25}}>
+          <View style={{alignItems: 'center', height: Metrics.HEIGHT * 0.25}}>
             <Text
               style={{
                 fontSize: 25,
@@ -178,7 +179,7 @@ export default class ContainTabFavori extends Component {
                 fontWeight: 'bold',
                 textAlign: 'left',
                 marginTop: Metrics.HEIGHT * 0.01,
-                marginBottom: Metrics.HEIGHT * 0.02
+                marginBottom: Metrics.HEIGHT * 0.02,
               }}>
               PUBLISHERS
             </Text>
@@ -204,58 +205,58 @@ export default class ContainTabFavori extends Component {
               horizontal
               showsHorizontalScrollIndicator={false}
             />
-            </View>
-            
-            <View style={[styles.rowMainView, {height: Metrics.HEIGHT * 0.6,alignItems:'center'}]}>
-              <Text
+          </View>
+          <View
+            style={[
+              styles.rowMainView,
+              {height: Metrics.HEIGHT * 0.6, alignItems: 'center'},
+            ]}>
+            <Text
               style={{
                 fontSize: 25,
                 width: Metrics.WIDTH * 0.9,
                 fontWeight: 'bold',
                 textAlign: 'left',
-                marginTop:Metrics.HEIGHT*0.01,
-                marginBottom:Metrics.HEIGHT*0.05,
-
+                marginTop: Metrics.HEIGHT * 0.01,
+                marginBottom: Metrics.HEIGHT * 0.05,
               }}>
               FAVORITE SPORTS
             </Text>
-              <Swiper
-                showsButtons={false}
-                autoplay={false}
-                loop={false}
-                ref="swiperSlide"
-                index={this.state.indexSlider}
-                paginationStyle={{
-                  position: 'absolute',
-                  bottom: -(Metrics.HEIGHT * 0.05),
-                }}
-                activeDot={<View style={styles.activeDot2} />}
-                dot={<View style={styles.dot2} />}
-                onIndexChanged={index => this.setState({indexSlider: index})}
-                scrollEnabled={true}>
-                {data.map((item, index) => {
-                  console.log(item);
-                  return (
-                    <View key={index}>
-                      <SliderEntry
-                        data={item}
-                        containerStyle={SliderEntryStyle.imageContainer}
-                        imageStyle={SliderEntryStyle.image}
-                        imageContainer={SliderEntryStyle.imageContainer}
-                        slideInnerContainer={
-                          SliderEntryStyle.slideInnerContainer
-                        }
-                        textContainer={SliderEntryStyle.textContainer}
-                       // type={'Recherche'}
-                      />
-                    </View>
-                  );
-                })}
-              </Swiper>
-            </View>
-          
+            <Swiper
+              showsButtons={false}
+              autoplay={false}
+              loop={false}
+              ref="swiperSlide"
+              index={this.state.indexSlider}
+              paginationStyle={{
+                position: 'absolute',
+                bottom: -(Metrics.HEIGHT * 0.05),
+              }}
+              activeDot={<View style={styles.activeDot2} />}
+              dot={<View style={styles.dot2} />}
+              onIndexChanged={index => this.setState({indexSlider: index})}
+              scrollEnabled={true}>
+              {data.map((item, index) => {
+                console.log(item);
+                return (
+                  <View key={index}>
+                    <SliderEntry
+                      data={item}
+                      containerStyle={SliderEntryStyle.imageContainer}
+                      imageStyle={SliderEntryStyle.image}
+                      imageContainer={SliderEntryStyle.imageContainer}
+                      slideInnerContainer={SliderEntryStyle.slideInnerContainer}
+                      textContainer={SliderEntryStyle.textContainer}
+                      // type={'Recherche'}
+                    />
+                  </View>
+                );
+              })}
+            </Swiper>
+          </View>
         </Container>
       </View>
     );
   }
 }
+export default ContainTabFavori;

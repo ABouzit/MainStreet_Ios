@@ -154,7 +154,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     height: Metrics.HEIGHT * 0.1,
     width: Metrics.WIDTH,
-    backgroundColor:'white'
   },
 });
 

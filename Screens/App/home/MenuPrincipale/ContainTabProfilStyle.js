@@ -134,6 +134,11 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: Metrics.HEIGHT * 0.025,
   },
+  btnMdpVisible2: {
+    position: 'absolute',
+    right: 40,
+    bottom: Metrics.HEIGHT * 0.025,
+  },
   profileImgs: {
     width: Metrics.WIDTH * 0.6,
     height: Metrics.WIDTH * 0.6,
@@ -204,7 +209,8 @@ const styles = StyleSheet.create({
     elevation: 3,
     marginLeft: -Metrics.WIDTH * 0.15,
     //backgroundColor:'green',
-    marginBottom: Metrics.HEIGHT * 0.08,
+    marginBottom: Metrics.HEIGHT * 0.04,
+    paddingBottom: Metrics.HEIGHT * 0.04,
   },
   card2: {
     alignSelf: 'center',
@@ -241,6 +247,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderColor: '#959595',
+    borderWidth: 1,
+  },
+  cameraCancel: {
+    position: 'absolute',
+    left: -25,
+    top: 10,
+    width: Metrics.WIDTH * 0.12,
+    height: Metrics.WIDTH * 0.12,
+    borderRadius: Metrics.WIDTH * 0.6,
+    alignSelf: 'flex-end',
+    backgroundColor: 'white',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderColor: 'red',
     borderWidth: 1,
   },
   nameTxts: {

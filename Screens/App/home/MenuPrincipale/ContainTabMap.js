@@ -16,13 +16,13 @@ import MapView, {
   Marker,
   AnimatedRegion,
 } from 'react-native-maps';
+import axios from 'axios';
 import styles from './ContainTabStyle';
 import Geolocation from '@react-native-community/geolocation';
 import RetroMapStyles from './../../../../RetroMapStyles.json';
 import Carousel from 'react-native-snap-carousel';
 import SliderEntry from './../Components/SliderParallalax/SliderEntry';
 import SliderEntryStyle from './../Components/SliderParallalax/SliderEntryStyle';
-
 let swiperImage =
   'https://ridersincorporated.e-monsite.com/medias/album/20190831-151513.jpg';
 const activeindicator = 0;
@@ -93,7 +93,7 @@ var data = [
     },
   },
 ];
-export default class ContainTabMap extends Component {
+class ContainTabMap extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -113,40 +113,49 @@ export default class ContainTabMap extends Component {
       }),
       slider1ActiveSlide: 0,
     };
-    this.initPositions()
+    console.log('position');
+    this.initPositions();
   }
 
-  functionAnimate(item,index) {
-    if(index==1){ if (Platform.OS === 'android') {
-      if (this.map) {
-        this.marker._component.animateMarkerToCoordinate(item, 500);
-        if(this.map)
-        setTimeout(() => {
-          this.map.fitToSuppliedMarkers(['marker1', 'marker2'], true);
-        }, 501);
+  functionAnimate(item, index) {
+    if (index == 1) {
+      if (Platform.OS === 'android') {
+        if (this.map) {
+          this.marker._component.animateMarkerToCoordinate(item, 500);
+          if (this.map) {
+            setTimeout(() => {
+              console.log('//');
+              this.map.fitToSuppliedMarkers(['marker1', 'marker2'], true);
+            }, 501);
+          }
+        }
+      } else {
+        this.state.region.timing(item, 500).start();
+        if (this.map) {
+          setTimeout(() => {
+            this.map.fitToSuppliedMarkers(['marker1', 'marker2'], true);
+          }, 501);
+        }
       }
     } else {
-      this.state.region.timing(item,500).start();
-      if(this.map)
-      setTimeout(() => {
-        this.map.fitToSuppliedMarkers(['marker1', 'marker2'], true);
-      }, 501);
-    }}
-    else{ if (Platform.OS === 'android') {
-      if (this.map) {
-        this.marker._component.animateMarkerToCoordinate(item.region, 500);
-        if(this.map)
-        setTimeout(() => {
-          this.map.fitToSuppliedMarkers(['marker1', 'marker2'], true);
-        }, 501);
+      if (Platform.OS === 'android') {
+        if (this.map) {
+          this.marker2._component.animateMarkerToCoordinate(item, 500);
+          if (this.map) {
+            setTimeout(() => {
+              this.map.fitToSuppliedMarkers(['marker1', 'marker2'], true);
+            }, 501);
+          }
+        }
+      } else {
+        this.state.ownerPosition.timing(item, 500).start();
+        if (this.map) {
+          setTimeout(() => {
+            this.map.fitToSuppliedMarkers(['marker1', 'marker2'], true);
+          }, 501);
+        }
       }
-    } else {
-      this.state.ownerPosition.timing(item,500).start();
-      if(this.map)
-      setTimeout(() => {
-        this.map.fitToSuppliedMarkers(['marker1', 'marker2'], true);
-      }, 501);
-    }}   
+    }
   }
   _renderItem({item, index}, parallaxProps) {
     return (
@@ -169,37 +178,52 @@ export default class ContainTabMap extends Component {
   }
 
   initPositions() {
-    console.log('init')
+    console.log('init');
     Geolocation.getCurrentPosition(
       position => {
-        console.log(position)
-       this.functionAnimate({ latitude: position.coords.latitude,
-                longitude: position.coords.longitude,},2)
-      this.functionAnimate(data[0].region,1)
-      if(this.map)
-      setTimeout(() => {
-        this.map.fitToSuppliedMarkers(['marker1', 'marker2'], true);
-      }, 501);
+        console.log(position);
+        this.functionAnimate(
+          {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          },
+          2,
+        );
+        this.functionAnimate(data[0].region, 1);
+        if (this.map) {
+          setTimeout(() => {
+            this.map.fitToSuppliedMarkers(['marker1', 'marker2'], true);
+          }, 501);
+        }
       },
       error => console.log(JSON.stringify(error)),
+      {
+        enableHighAccuracy: false,
+        timeout: 200000,
+        maximumAge: 1000,
+      },
+    );
+
+    this.watchID = Geolocation.watchPosition(
+      position => {
+        console.log('init2');
+        console.log(position);
+        this.functionAnimate(
+          {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          },
+          2,
+        );
+        this.functionAnimate(data[0].region, 1);
+      },
+      error => console.log('//' + error.message),
       {
         enableHighAccuracy: true,
         timeout: 200000,
         maximumAge: 1000,
       },
     );
-
-    this.watchID = Geolocation.watchPosition(position => {position => {
- //     this.functionAnimate({ latitude: position.coords.latitude,
-  //             longitude: position.coords.longitude,},2)
-     this.functionAnimate(data[0].region,1)
-     }},
-    error => console.log('//'+error.message),
-    {
-      enableHighAccuracy: true,
-      timeout: 200000,
-      maximumAge: 1000,
-    },);
   }
 
   render() {
@@ -212,6 +236,12 @@ export default class ContainTabMap extends Component {
     return (
       <Container style={styles.containerMap}>
         <MapView
+          initialRegion={{
+            latitude: LATITUDE,
+            longitude: LONGITUDE,
+            latitudeDelta: LATITUDE_DELTA,
+            longitudeDelta: LONGITUDE_DELTA,
+          }}
           ref={map => {
             this.map = map;
           }}
@@ -258,7 +288,7 @@ export default class ContainTabMap extends Component {
             loopClonesPerSide={2}
             onSnapToItem={index => {
               this.setState({slider1ActiveSlide: index}, () =>
-                this.functionAnimate(data[index].region,1),
+                this.functionAnimate(data[index].region, 1),
               );
             }}
           />
@@ -267,3 +297,4 @@ export default class ContainTabMap extends Component {
     );
   }
 }
+export default ContainTabMap;

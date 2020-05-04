@@ -10,6 +10,7 @@ import {
   Image,
   ScrollView,
   I18nManager,
+  BackHandler,
 } from 'react-native';
 import SliderEntry from './../Components/SliderParallalax/SliderEntry';
 import {
@@ -32,6 +33,10 @@ import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {CommonActions} from '@react-navigation/native';
 import SliderEntryStyle from './../Components/SliderParallalax/SliderEntryStyle';
 import MaterialTabs from 'react-native-material-tabs';
+import firebase from '@react-native-firebase/app';
+import '@react-native-firebase/auth';
+import '@react-native-firebase/database';
+import AsyncStorage from '@react-native-community/async-storage';
 const activeindicator = 0;
 
 const profileImageOne =
@@ -55,9 +60,9 @@ const profileImageEight =
 const profileImageNine =
   'https://antiqueruby.aliansoftware.net//Images/social/people_nine_soeighteen.png';
 
-export default class ContainTabRecherche extends Component {
+class ContainTabRecherche extends Component {
   constructor(props) {
-console.log(JSON.stringify(Dimensions))
+    console.log(JSON.stringify(Dimensions));
     super(props);
     this.state = {
       index: '',
@@ -66,6 +71,7 @@ console.log(JSON.stringify(Dimensions))
       filterOn: false,
       filterValue: 0,
       sliderValue: 0,
+      user: {},
       dataPeople: [
         {
           id: 1,
@@ -142,6 +148,28 @@ console.log(JSON.stringify(Dimensions))
       ],
     };
   }
+  // "latitude": 34.02088871, "longitude": -6.83978391,
+  getUser() {
+    console.log('///dkhl Rech');
+    AsyncStorage.getItem('authentifiedUser').then(user => {
+      if (user) {
+        console.log('getUser()');
+        console.log('getfin');
+        this.setState({user: JSON.parse(user), uploading: false}, () =>
+          console.log(this.state.user),
+        );
+      }
+    });
+  }
+  componentWillMount() {
+    var that = this;
+    BackHandler.addEventListener('hardwareBackPress', function() {
+      return true;
+    });
+    this.props.navigation.addListener('focus', () => {
+      this.getUser();
+    });
+  }
   onSelected(id) {
     let tmp = this.state.selectedLots;
 
@@ -210,7 +238,27 @@ console.log(JSON.stringify(Dimensions))
       }
     }
   }
+  getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
+    var R = 6371; // Radius of the earth in km
+    var dLat = this.deg2rad(lat2 - lat1); // deg2rad below
+    var dLon = this.deg2rad(lon2 - lon1);
+    var a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(this.deg2rad(lat1)) *
+        Math.cos(this.deg2rad(lat2)) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    var d = R * c; // Distance in km
+    return d;
+  }
+
+  deg2rad(deg) {
+    return deg * (Math.PI / 180);
+  }
+
   render() {
+    
     StatusBar.setBarStyle('dark-content', true);
     if (Platform.OS === 'android') {
       StatusBar.setBackgroundColor('transparent', true);
@@ -440,7 +488,11 @@ console.log(JSON.stringify(Dimensions))
               showsHorizontalScrollIndicator={false}
               directionalLockEnabled={true}
               onScrollBeginDrag={() => console.log('scroll')}>
-              <View style={{alignItems: 'center', paddingBottom: 50}}>
+              <View
+                style={{
+                  alignItems: 'center',
+                  paddingBottom: Metrics.HEIGHT * 0.15,
+                }}>
                 <View
                   style={styles.rowMainView}
                   animation="bounceInLeft"
@@ -451,6 +503,7 @@ console.log(JSON.stringify(Dimensions))
                     return (
                       <SliderEntry
                         data={item}
+                        key={index}
                         containerStyle={SliderEntryStyle.imageContainer}
                         imageStyle={SliderEntryStyle.image}
                         imageContainer={
@@ -461,6 +514,7 @@ console.log(JSON.stringify(Dimensions))
                         }
                         textContainer={SliderEntryStyle.textContainerRecherche}
                         type={'Recherche'}
+                        onButtonClick={() => this.addSpot()}
                       />
                     );
                   })}
@@ -587,3 +641,4 @@ console.log(JSON.stringify(Dimensions))
                     </View>
                   );*/
 }
+export default ContainTabRecherche;

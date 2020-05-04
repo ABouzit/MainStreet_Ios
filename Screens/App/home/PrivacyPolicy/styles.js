@@ -12,6 +12,15 @@ const styles = StyleSheet.create({
     elevation: 0,
     paddingLeft: Metrics.WIDTH * 0.05,
     paddingRight: Metrics.WIDTH * 0.05,
+    ...Platform.select({
+      ios: {
+        marginTop: 0,
+      },
+      android: {
+        marginTop: Metrics.HEIGHT * 0.03,
+      },
+    }),
+    
   },
   backArrow: {
     justifyContent: 'center',

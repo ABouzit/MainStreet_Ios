@@ -1,6 +1,6 @@
 import React from 'react';
 import {Button, TouchableOpacity, I18nManager} from 'react-native';
-import {withNavigation} from 'react-navigation';
+import {withNavigation} from '@react-navigation/compat';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 class BackButton extends React.Component {
   render() {

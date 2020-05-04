@@ -169,8 +169,14 @@ const styles = StyleSheet.create({
   likeView: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginLeft: Metrics.WIDTH * 0.08,
   },
   shareView: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginLeft: Metrics.WIDTH * 0.08,
+  },
+  commentView: {
     flexDirection: 'row',
     alignItems: 'center',
     marginLeft: Metrics.WIDTH * 0.08,

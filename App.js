@@ -20,6 +20,7 @@ import {Container, Content, Header, Body, Left, Right} from 'native-base';
 import PrivacyPolicy from './Screens/App/home/PrivacyPolicy/index';
 import ConnexionPage from './Screens/App/home/ConnectionPage/index';
 import LoginPage from './Screens/App/home/LoginPage/index';
+import PreferencePage from './Screens/App/home/PreferencePage/index';
 import DetailsCommentsModal from './Screens/App/home/DetailsCommentsModal/index';
 import SignupPage from './Screens/App/home/SignupPage/index';
 import PrendrePhoto from './Screens/App/home/PrendrePhoto/index';
@@ -40,8 +41,8 @@ function MainStackScreen() {
     </MainStack.Navigator>
   );
 }
-function ModalScreen({navigation}) {
-  return <DetailsCommentsModal navigation={navigation} />;
+function ModalScreen({navigation, route}) {
+  return <DetailsCommentsModal navigation={navigation} route={route} />;
 }
 function RootStackScreen() {
   return (
@@ -53,7 +54,7 @@ function RootStackScreen() {
 }
 function DrawerScreen() {
   return (
-    <Drawer.Navigator initialRouteName="Home">
+    <Drawer.Navigator initialRouteName="ConnexionPage">
       <Drawer.Screen
         name="Home"
         component={PrivacyPolicy}
@@ -81,9 +82,9 @@ function DrawerScreen() {
         title="Menu Principale"
       />
       <Drawer.Screen
-        name="ProfilPage"
-        component={ProfilPage}
-        title="Profil Page"
+        name="PreferencePage"
+        component={PreferencePage}
+        title="Mes Preference"
       />
     </Drawer.Navigator>
   );

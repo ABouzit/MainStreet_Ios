@@ -11,10 +11,14 @@
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 #import <GoogleMaps/GoogleMaps.h>
+#import <Firebase.h>
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  if ([FIRApp defaultApp] == nil) {
+    [FIRApp configure];
+  }
   [GMSServices provideAPIKey:@"AIzaSyBf6r0tpxhbsdUi4Q5TEKdzJqlSqF6QFlk"];
   NSURL *jsCodeLocation;
   for (NSString* family in [UIFont familyNames])

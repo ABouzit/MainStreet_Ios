@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
   },
   header: {
     height: Metrics.HEIGHT * 0.1,
-    backgroundColor: '#fff',
+    backgroundColor: 'transparent',
     borderBottomWidth: 0,
     elevation: 0,
     paddingLeft: Metrics.WIDTH * 0.05,
@@ -21,12 +21,10 @@ const styles = StyleSheet.create({
       },
     }),
   },
-  textTitle: {
-    color: Colors.black,
-    fontSize: Fonts.moderateScale(20),
-    fontWeight: 'bold',
-    alignSelf: 'flex-end',
-    fontFamily: Fonts.type.helveticaNeueLight,
+  screenBg: {
+    width: Metrics.WIDTH,
+    height: '100%',
+    backgroundColor: 'black',
   },
   left: {
     backgroundColor: 'transparent',
@@ -125,6 +123,7 @@ const styles = StyleSheet.create({
   },
   Container: {
     flex: 1,
+    width: '100%',
   },
   imagesPicker: {flex: 10},
   buttons: {flex: 4},
@@ -162,6 +161,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  activeDot: {
+    backgroundColor: 'rgb(57,90,255)',
+    width: Metrics.WIDTH * 0.018,
+    height: Metrics.WIDTH * 0.018,
+    borderRadius: Metrics.WIDTH * 0.009,
+    marginLeft: Metrics.WIDTH * 0.004,
+    marginRight: Metrics.WIDTH * 0.004,
+    ...Platform.select({
+      ios: {
+        marginBottom: Metrics.HEIGHT * 0.08,
+      },
+      android: {
+        marginBottom: Metrics.HEIGHT * 0.06,
+      },
+    }),
+  },
   buttonlogin: {
     backgroundColor: Colors.white,
     alignSelf: 'center',
@@ -188,6 +203,64 @@ const styles = StyleSheet.create({
     shadowOpacity: 1,
     shadowRadius: 5,
     elevation: 3,
+  },
+  dot: {
+    backgroundColor: 'rgb(212,216,224)',
+    width: Metrics.WIDTH * 0.018,
+    height: Metrics.WIDTH * 0.018,
+    borderRadius: Metrics.WIDTH * 0.009,
+    marginLeft: Metrics.WIDTH * 0.004,
+    marginRight: Metrics.WIDTH * 0.004,
+    ...Platform.select({
+      ios: {
+        marginBottom: Metrics.HEIGHT * 0.08,
+      },
+      android: {
+        marginBottom: Metrics.HEIGHT * 0.06,
+      },
+    }),
+  },
+  publishBotton: {
+    backgroundColor: 'rgb(255,213,0)',
+    width: Metrics.WIDTH * 0.35,
+    ...Platform.select({
+      ios: {
+        height: Metrics.HEIGHT * 0.05,
+      },
+      android: {
+        height: Metrics.HEIGHT * 0.06,
+      },
+    }),
+    alignSelf: 'center',
+    justifyContent: 'center',
+  },
+  publishText: {
+    fontFamily: Fonts.type.sfuiDisplayMedium,
+    fontSize: Fonts.moderateScale(15),
+    color: 'black',
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+   publishBotton2: {
+    backgroundColor: 'rgb(57,90,255)',
+    width: Metrics.WIDTH * 0.35,
+    ...Platform.select({
+      ios: {
+        height: Metrics.HEIGHT * 0.05,
+      },
+      android: {
+        height: Metrics.HEIGHT * 0.06,
+      },
+    }),
+    alignSelf: 'center',
+    justifyContent: 'center',
+  },
+  publishText2: {
+    fontFamily: Fonts.type.sfuiDisplayMedium,
+    fontSize: Fonts.moderateScale(15),
+    color: 'white',
+    textAlign: 'center',
+    fontWeight: 'bold',
   },
   btnText: {
     fontFamily: 'SFUIDisplay-Medium',

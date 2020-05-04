@@ -18,18 +18,46 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import CheckBox from 'react-native-check-box';
-
-export default class ConnexionPage extends Component {
+import firebase from '@react-native-firebase/app';
+import '@react-native-firebase/auth';
+class ConnexionPage extends Component {
   state = {
     modalVisible: false,
     isChecked: false,
   };
 
+  componentGracefulUnmount() {
+    window.removeEventListener('beforeunload', this.componentGracefulUnmount);
+  }
   componentWillMount() {
     var that = this;
     BackHandler.addEventListener('hardwareBackPress', function() {
-      that.props.navigation.navigate('Home');
       return true;
+    });
+    this.props.navigation.addListener('focus', () => {
+      firebase.auth().onAuthStateChanged(user => {
+        console.log(user);
+        if (user) {
+          var starCountRef = firebase
+            .database()
+            .ref('/NEWDEV/users/' + user.uid);
+          starCountRef.once('value', snapshot => {
+            console.log('//' + JSON.stringify(snapshot));
+            if (!snapshot.val().policyPrivacyAccepted) {
+              this.props.navigation.navigate('Home');
+            } else if (
+              !snapshot.val().preferences ||
+              snapshot.val().preferences == []
+            ) {
+              this.props.navigation.navigate('PreferencePage');
+            } else {
+              this.props.navigation.navigate('MenuPrincipale', {
+                screen: 'ContainTabRecherche',
+              });
+            }
+          });
+        }
+      });
     });
   }
 
@@ -54,17 +82,7 @@ export default class ConnexionPage extends Component {
     return (
       <ImageBackground source={pic.uri} style={styles.screenBg}>
         <Header style={styles.header}>
-          <Left style={styles.left}>
-            <TouchableOpacity
-              style={styles.backArrow}
-              onPress={() => this.props.navigation.navigate('Home')}>
-              <FontAwesome
-                name={I18nManager.isRTL ? 'angle-right' : 'angle-left'}
-                size={30}
-                color="white"
-              />
-            </TouchableOpacity>
-          </Left>
+          <Left style={styles.left} />
           <Body style={styles.body}>
             <Text style={styles.textTitle} />
           </Body>
@@ -75,9 +93,9 @@ export default class ConnexionPage extends Component {
           <TouchableOpacity
             info
             style={styles.buttonlogin}
-            onPress={() => alert('Sign Up')}>
+            onPress={() => this.props.navigation.navigate('LoginPage')}>
             <Text autoCapitalize="words" style={styles.btnText}>
-             CONNEXION
+              CONNEXION
             </Text>
           </TouchableOpacity>
         </View>
@@ -85,3 +103,4 @@ export default class ConnexionPage extends Component {
     );
   }
 }
+export default ConnexionPage;

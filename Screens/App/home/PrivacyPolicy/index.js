@@ -7,9 +7,13 @@ import {
   TouchableHighlight,
   BackHandler,
   ScrollView,
-  StatusBar
+  StatusBar,
+  Platform,
+  ActivityIndicator,
 } from 'react-native';
-import {DrawerActions} from '@react-navigation/native';
+import firebase from '@react-native-firebase/app';
+import database from '@react-native-firebase/database';
+import {DrawerActions, BaseRouter} from '@react-navigation/native';
 import {Right, Left, Body, Header, Input, Container} from 'native-base';
 import styles from './styles';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -17,24 +21,97 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Dropdown from '../../home/Components/Dropdown/dropdown/';
 import {Metrics} from '../../Themes';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
-export default class PrivacyPolicy extends Component {
+import AsyncStorage from '@react-native-community/async-storage';
+class PrivacyPolicy extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isSearch: false,
+      user: {},
+      uploading: true,
     };
   }
-
+  getUser() {
+    console.log('///dkhl Policy');
+    AsyncStorage.getItem('authentifiedUser').then(user => {
+      if (user) {
+        console.log('getUser()');
+        console.log('getfin');
+        this.setState(
+          {
+            user: JSON.parse(user),
+            uploading: false,
+          },
+          () => console.log(this.state.user),
+        );
+      }
+    });
+  }
   componentWillMount() {
     var that = this;
     BackHandler.addEventListener('hardwareBackPress', function() {
-      that.props.navigation.navigate('ECommerceMenu');
       return true;
     });
+    this.props.navigation.addListener('focus', () => {
+      this.getUser();
+    });
   }
-
+  accepte() {
+    this.setState({uploading: true}, () => {
+      firebase
+        .database()
+        .ref('NEWDEV/users/' + this.state.user.uid)
+        .update({
+          policyPrivacyAccepted: true,
+        })
+        .then(res =>
+          this.setState({uploading: false}, () => {
+            AsyncStorage.setItem(
+              'authentifiedUser',
+              JSON.stringify({
+                uid: this.state.user.uid,
+                nom: this.state.user.nom,
+                prenom: this.state.user.prenom,
+                pseudo: this.state.user.pseudo,
+                email: this.state.user.email,
+                password: this.state.user.password,
+                policyPrivacyAccepted: true,
+                photoUrl: '',
+                preferences: this.state.user.preferences,
+              }),
+            ).then(() => {
+              this.setState({user: {}});
+              this.props.navigation.navigate('PrendrePhoto');
+            });
+          }),
+        )
+        .catch(error => console.log(error));
+    });
+  }
+  cancel() {
+    if (firebase.auth().currentUser) {
+      this.setState({uploading: true}, () => {
+        firebase
+          .auth()
+          .currentUser.delete()
+          .then(() => {
+            this.setState({uploading: false}, () => {
+              this.props.navigation.navigate('SignupPage');
+            });
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      });
+    }
+    firebase.auth().onAuthStateChanged(user => console.log(user));
+  }
   render() {
-  
+    StatusBar.setBarStyle('dark-content', true);
+    if (Platform.OS === 'android') {
+      StatusBar.setBackgroundColor('#FFFFFF', true);
+      StatusBar.setTranslucent(true);
+    }
     /*
     StatusBar.setBarStyle('dark-content', true);
       StatusBar.setBackgroundColor('rgba(0,0,0,0.5)', true);
@@ -42,26 +119,11 @@ export default class PrivacyPolicy extends Component {
     */
     return (
       <Container style={styles.main}>
-        
-        <Header androidStatusBarColor={'#000'} style={styles.header}>
+        <Header style={styles.header}>
           <Left style={styles.left}>
-            <TouchableOpacity
-              style={styles.backArrow}
-              onPress={() =>
-                {this.props.navigation.dispatch(DrawerActions.openDrawer());
-                console.log(JSON.stringify(this.props.navigation))}
-              }>
-              <View style={styles.backView}>
-                <FontAwesome
-                  name="angle-left"
-                  type="FontAwesome"
-                  size={40}
-                  color="black"
-                  style={styles.arrow}
-                />
-                <Text style={styles.back}>back</Text>
-              </View>
-            </TouchableOpacity>
+            <View>
+              <View style={styles.backView} />
+            </View>
           </Left>
           <Body style={styles.body}>
             <Text style={styles.textTitle}>Terms of service</Text>
@@ -117,7 +179,9 @@ export default class PrivacyPolicy extends Component {
           <TouchableHighlight
             info
             style={styles.buttonlogin}
-            onPress={() => alert('Sign In')}>
+            onPress={() => {
+              this.accepte();
+            }}>
             <Text autoCapitalize="words" style={styles.btnText}>
               Accept
             </Text>
@@ -125,13 +189,46 @@ export default class PrivacyPolicy extends Component {
           <TouchableOpacity
             info
             style={styles.buttonsignup}
-            onPress={() => alert('Sign Up')}>
+            onPress={() => this.cancel()}>
             <Text autoCapitalize="words" style={styles.btnText2}>
               Decline
             </Text>
           </TouchableOpacity>
         </View>
+        {this.state.uploading ? (
+          <View
+            style={{
+              height: Metrics.HEIGHT * 1.05,
+              width: Metrics.WIDTH,
+              position: 'absolute',
+              right: 0,
+              top: 0,
+              bottom: 0,
+              left: 0,
+              backgroundColor: 'rgba(0,0,0,0.7)',
+              elevation: 4,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <ActivityIndicator
+              animating={true}
+              color="#fff"
+              size="large"
+              style={{
+                activityIndicator: {
+                  flex: 1,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  height: 80,
+                },
+              }}
+            />
+          </View>
+        ) : (
+          <View />
+        )}
       </Container>
     );
   }
 }
+export default PrivacyPolicy;
