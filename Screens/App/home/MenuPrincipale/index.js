@@ -87,6 +87,10 @@ export default class MenuPrincipale extends Component {
       this.setState({selectedTab: 'Profile', filterOn: false}, () =>
         this.props.navigation.navigate('ContainTabProfile'),
       );
+    } else if (string === 'Deconexion') {
+      this.setState({selectedTab: 'Recherche', filterOn: false}, () =>
+        this.props.navigation.navigate('ConnexionPage'),
+      );
     }
   }
   renderSelectedTab() {

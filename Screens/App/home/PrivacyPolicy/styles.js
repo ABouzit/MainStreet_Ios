@@ -14,13 +14,14 @@ const styles = StyleSheet.create({
     paddingRight: Metrics.WIDTH * 0.05,
     ...Platform.select({
       ios: {
-        marginTop: 0,
+        marginTop: Metrics.HEIGHT * -0.03,
+        height: Metrics.HEIGHT * 0.1,
       },
       android: {
+        height: Metrics.HEIGHT * 0.1,
         marginTop: Metrics.HEIGHT * 0.03,
       },
     }),
-    
   },
   backArrow: {
     justifyContent: 'center',
@@ -142,11 +143,11 @@ const styles = StyleSheet.create({
   buttonlogin: {
     borderWidth: 2,
     borderColor: Colors.yellow,
-   backgroundColor: Colors.yellow,
+    backgroundColor: Colors.yellow,
     alignSelf: 'center',
     height: Metrics.HEIGHT * 0.04,
-    paddingLeft:15,
-    paddingRight:15,
+    paddingLeft: 15,
+    paddingRight: 15,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -157,8 +158,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     alignSelf: 'center',
     height: Metrics.HEIGHT * 0.04,
-    paddingLeft:15,
-    paddingRight:15,
+    paddingLeft: 15,
+    paddingRight: 15,
     alignItems: 'center',
     justifyContent: 'center',
     marginLeft: 30,
@@ -166,16 +167,16 @@ const styles = StyleSheet.create({
   btnText: {
     fontWeight: 'bold',
     color: Colors.txtgrey,
-    zIndex:100,
-    fontSize:15,
-    textAlignVertical:'center'
+    zIndex: 100,
+    fontSize: 15,
+    textAlignVertical: 'center',
   },
   btnText2: {
     fontWeight: 'bold',
     color: Colors.black,
-    zIndex:100,
-    fontSize:15,
-    textAlignVertical:'center'
+    zIndex: 100,
+    fontSize: 15,
+    textAlignVertical: 'center',
   },
 });
 

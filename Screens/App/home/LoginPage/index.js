@@ -11,6 +11,7 @@ import {
   I18nManager,
   ActivityIndicator,
 } from 'react-native';
+import withGracefulUnmount from 'react-graceful-unmount';
 import firebase from '@react-native-firebase/app';
 import '@react-native-firebase/auth';
 import {Container, Right, Item, Input, Header, Left, Body} from 'native-base';
@@ -43,6 +44,11 @@ class LoginPage extends Component {
     data.checked = !data.checked;
     data.checked ? 'you checked ' : 'you unchecked ';
   }
+  componentGracefulUnmount() {
+    // if (window) {
+    //   window.removeEventListener('beforeunload', this.componentGracefulUnmount);
+    // }
+  }
   login() {
     this.setState({uploading: true}, () => {
       firebase
@@ -50,95 +56,99 @@ class LoginPage extends Component {
         .signInWithEmailAndPassword(this.state.email, this.state.password)
         .then(res => {
           console.log(res);
-          firebase.auth().onAuthStateChanged(user => {
-            console.log(user);
-            var starCountRef = firebase
-              .database()
-              .ref('/NEWDEV/users/' + user.uid);
-            starCountRef.once('value', snapshot => {
-              if (!snapshot.val().policyPrivacyAccepted) {
-                AsyncStorage.setItem(
-                  'authentifiedUser',
-                  JSON.stringify({
-                    uid: user.uid,
-                    pseudo: snapshot.val().pseudo,
-                    prenom: snapshot.val().prenom,
-                    preferences: [],
-                    policyPrivacyAccepted: false,
-                    photoUrl: '',
-                    password: snapshot.val().password,
-                    nom: snapshot.val().nom,
-                    email: snapshot.val().email,
-                  }),
-                ).then(() =>
-                  this.setState(
-                    {
-                      uploading: false,
-                      submit: false,
-                      password: '',
-                      email: '',
-                    },
-                    () => this.props.navigation.navigate('Home'),
-                  ),
-                );
-              } else if (
-                !snapshot.val().preferences ||
-                snapshot.val().preferences == []
-              ) {
-                AsyncStorage.setItem(
-                  'authentifiedUser',
-                  JSON.stringify({
-                    uid: user.uid,
-                    pseudo: snapshot.val().pseudo,
-                    prenom: snapshot.val().prenom,
-                    preferences: [],
-                    policyPrivacyAccepted: snapshot.val().policyPrivacyAccepted,
-                    photoUrl: snapshot.val()?.photoUrl,
-                    password: snapshot.val().password,
-                    nom: snapshot.val().nom,
-                    email: snapshot.val().email,
-                  }),
-                ).then(() =>
-                  this.setState(
-                    {
-                      uploading: false,
-                      submit: false,
-                      password: '',
-                      email: '',
-                    },
-                    () => this.props.navigation.navigate('PreferencePage'),
-                  ),
-                );
-              } else {
-                AsyncStorage.setItem(
-                  'authentifiedUser',
-                  JSON.stringify({
-                    uid: user.uid,
-                    pseudo: snapshot.val().pseudo,
-                    prenom: snapshot.val().prenom,
-                    preferences: snapshot.val().preferences,
-                    policyPrivacyAccepted: snapshot.val().policyPrivacyAccepted,
-                    photoUrl: snapshot.val()?.photoUrl,
-                    password: snapshot.val().password,
-                    nom: snapshot.val().nom,
-                    email: snapshot.val().email,
-                  }),
-                ).then(() =>
-                  this.setState(
-                    {
-                      uploading: false,
-                      submit: false,
-                      password: '',
-                      email: '',
-                    },
-                    () =>
-                      this.props.navigation.navigate('MenuPrincipale', {
-                        screen: 'ContainTabRecherche',
-                      }),
-                  ),
-                );
-              }
-            });
+          let user = firebase.auth().currentUser;
+          console.log(user);
+          var starCountRef = firebase
+            .database()
+            .ref('/NEWDEV/users/' + user.uid);
+          starCountRef.once('value', snapshot => {
+            if (!snapshot.val().policyPrivacyAccepted) {
+              AsyncStorage.setItem(
+                'authentifiedUser',
+                JSON.stringify({
+                  uid: user.uid,
+                  pseudo: snapshot.val().pseudo,
+                  prenom: snapshot.val().prenom,
+                  preferences: [],
+                  policyPrivacyAccepted: false,
+                  photoUrl: '',
+                  nom: snapshot.val().nom,
+                  email: snapshot.val().email,
+                }),
+              ).then(() =>
+                this.setState(
+                  {
+                    uploading: false,
+                    submit: false,
+                    password: '',
+                    email: '',
+                  },
+                  () => {
+                    this.props.navigation.navigate('Home'),
+                      this.componentGracefulUnmount();
+                  },
+                ),
+              );
+            } else if (
+              !snapshot.val().preferences ||
+              snapshot.val().preferences == []
+            ) {
+              AsyncStorage.setItem(
+                'authentifiedUser',
+                JSON.stringify({
+                  uid: user.uid,
+                  pseudo: snapshot.val().pseudo,
+                  prenom: snapshot.val().prenom,
+                  preferences: [],
+                  policyPrivacyAccepted: snapshot.val().policyPrivacyAccepted,
+                  photoUrl: snapshot.val()?.photoUrl,
+                  nom: snapshot.val().nom,
+                  email: snapshot.val().email,
+                }),
+              ).then(() =>
+                this.setState(
+                  {
+                    uploading: false,
+                    submit: false,
+                    password: '',
+                    email: '',
+                  },
+                  () => {
+                    this.props.navigation.navigate('PreferencePage');
+                    this.componentGracefulUnmount();
+                  },
+                ),
+              );
+            } else {
+              AsyncStorage.setItem(
+                'authentifiedUser',
+                JSON.stringify({
+                  uid: user.uid,
+                  pseudo: snapshot.val().pseudo,
+                  prenom: snapshot.val().prenom,
+                  preferences: snapshot.val().preferences,
+                  policyPrivacyAccepted: snapshot.val().policyPrivacyAccepted,
+                  photoUrl: snapshot.val()?.photoUrl,
+                  nom: snapshot.val().nom,
+                  email: snapshot.val().email,
+                }),
+              ).then(() =>
+                this.setState(
+                  {
+                    uploading: false,
+                    submit: false,
+                    password: '',
+                    email: '',
+                  },
+                  () => {
+                    this.props.navigation.navigate('MenuPrincipale', {
+                      screen: 'ContainTabRecherche',
+                    });
+                    this.componentGracefulUnmount();
+                  },
+                ),
+              );
+            }
           });
         })
         .catch(error => {

@@ -630,6 +630,46 @@ class ContainTabProfile extends Component {
   //     });
   //   });
   // }
+  deconnection() {
+    // firebase
+    //   .auth()
+    //   .signOut()
+    //   .then(() => {
+    //     AsyncStorage.removeItem('authentifiedUser').then(() => {
+    this.drawer.close();
+    this.setState(
+      {
+        pseudoValue: this.state.user.pseudo,
+        nomValue: this.state.user.nom,
+        prenomValue: this.state.user.prenom,
+        EmailValue: this.state.user.email,
+        PasswordValue: '',
+        oldPasswordValue: '',
+        passwordNotVisible: true,
+        oldPasswordNotVisible: true,
+        user: this.state.user,
+        imagePath: '',
+        tabValidation: [],
+      },
+      () => {
+        this.preferencesFromTabToObj().then(() => {
+          console.log(this.state.preferences);
+          firebase
+            .auth()
+            .signOut()
+            .then(() => {
+              AsyncStorage.removeItem('authentifiedUser').then(() => {
+                console.log('deconnecta');
+                subscriberRedirect.next('Deconexion');
+              });
+            });
+        });
+      },
+    );
+
+    //   });
+    // });
+  }
   render() {
     const validationEmail = validate(
       {EmailValue: this.state.EmailValue},
@@ -1480,34 +1520,23 @@ class ContainTabProfile extends Component {
                           />
                         </TouchableOpacity>
                       </View>
-                      <View style={styles.cardLigneLast}>
-                        <Text style={styles.cardLigneText}>Deconnecter</Text>
-                        <SwitchToggle
-                          containerStyle={{
-                            width: Metrics.WIDTH * 0.13,
-                            height: Metrics.HEIGHT * 0.03,
-                            borderRadius: 25,
-                            padding: 0,
+                      <View style={[styles.cardLigne, {marginBottom: 20}]}>
+                        <TouchableOpacity
+                          info
+                          style={{
+                            width: '100%',
+                            flexDirection: 'row',
                           }}
-                          circleStyle={{
-                            width: Metrics.HEIGHT * 0.04,
-                            height: Metrics.HEIGHT * 0.04,
-                            borderRadius: Metrics.HEIGHT * 0.06,
-                            borderColor: '#e5e5e5',
-                            borderWidth: 1,
-                            shadowOffset: {width: 0, height: 0},
-                            shadowColor: 'black',
-                            shadowOpacity: 1,
-                            shadowRadius: 5,
-                            elevation: 2,
-                          }}
-                          switchOn={true}
-                          onPress={this.onPress1}
-                          circleColorOff="white"
-                          circleColorOn="white"
-                          backgroundColorOn="rgb(255,214,78)"
-                          backgroundColorOff="rgb(159,159,159)"
-                        />
+                          onPress={() => this.deconnection()}>
+                          <Text style={styles.cardLigneText}>Deconnecter</Text>
+                          <FontAwesome
+                            name="angle-right"
+                            type="FontAwesome"
+                            size={20}
+                            color="rgb(159,159,159)"
+                            style={{width: 30}}
+                          />
+                        </TouchableOpacity>
                       </View>
                     </View>
                     <TouchableOpacity
