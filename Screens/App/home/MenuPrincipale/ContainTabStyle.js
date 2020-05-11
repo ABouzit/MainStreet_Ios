@@ -525,7 +525,7 @@ const styles = StyleSheet.create({
   header: {
     ...Platform.select({
       ios: {
-        marginTop: Metrics.HEIGHT * 0,
+        marginTop: Metrics.HEIGHT * -0.03,
 
         height: Metrics.HEIGHT * 0.1,
       },

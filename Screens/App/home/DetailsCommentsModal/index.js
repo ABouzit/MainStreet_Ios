@@ -53,7 +53,7 @@ class DetailsCommentsModal extends Component {
   componentWillMount() {
     var that = this;
     BackHandler.addEventListener('hardwareBackPress', function() {
-      that.props.navigation.navigate('ContainTabProfile');
+      that.props.navigation.goBack();
       return true;
     });
   }
@@ -621,6 +621,27 @@ class DetailsCommentsModal extends Component {
         ) : (
           <View />
         )}
+        <TouchableOpacity
+          style={{
+            backgroundColor: 'rgb(57,90,255)',
+            width: 40,
+            height: 40,
+            position: 'absolute',
+            top: 50,
+            left: 50,
+            elevation: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderRadius: 50,
+          }}
+          onPress={() => this.props.navigation.goBack()}>
+          <FontAwesome
+            name="chevron-left"
+            size={25}
+            color={'#fff'}
+            style={{width: 25, height: 25}}
+          />
+        </TouchableOpacity>
       </Container>
     );
   }

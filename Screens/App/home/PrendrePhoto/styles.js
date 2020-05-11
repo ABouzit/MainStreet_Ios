@@ -6,7 +6,6 @@ const styles = StyleSheet.create({
     height: Metrics.HEIGHT,
   },
   header: {
-    height: Metrics.HEIGHT * 0.1,
     backgroundColor: '#fff',
     borderBottomWidth: 0,
     elevation: 0,
@@ -14,10 +13,12 @@ const styles = StyleSheet.create({
     paddingRight: Metrics.WIDTH * 0.05,
     ...Platform.select({
       ios: {
-        marginTop: 0,
+        marginTop: Metrics.HEIGHT * -0.03,
+        height: Metrics.HEIGHT * 0.1,
       },
       android: {
         marginTop: Metrics.HEIGHT * 0.03,
+        height: Metrics.HEIGHT * 0.1,
       },
     }),
   },

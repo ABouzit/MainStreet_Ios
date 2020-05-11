@@ -9,12 +9,15 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: Colors.transparent,
-    height: Metrics.WIDTH * 0.1,
+    
     borderBottomWidth: 0,
     ...Platform.select({
-      ios: {},
+      ios: {
+        height: Metrics.WIDTH * 0.05,
+      },
       android: {
         marginTop: Fonts.moderateScale(25),
+        height: Metrics.WIDTH * 0.1,
       },
     }),
     elevation: 0,

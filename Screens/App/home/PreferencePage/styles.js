@@ -6,7 +6,6 @@ const styles = StyleSheet.create({
     height: Metrics.HEIGHT,
   },
   header: {
-    height: Metrics.HEIGHT * 0.1,
     backgroundColor: 'transparent',
     borderBottomWidth: 0,
     elevation: 0,
@@ -14,10 +13,12 @@ const styles = StyleSheet.create({
     paddingRight: Metrics.WIDTH * 0.05,
     ...Platform.select({
       ios: {
-        marginTop: 0,
+        marginTop: Metrics.HEIGHT * -0.03,
+        height: Metrics.HEIGHT * 0.1,
       },
       android: {
         marginTop: Metrics.HEIGHT * 0.03,
+        height: Metrics.HEIGHT * 0.1,
       },
     }),
   },
@@ -241,7 +242,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: 'bold',
   },
-   publishBotton2: {
+  publishBotton2: {
     backgroundColor: 'rgb(57,90,255)',
     width: Metrics.WIDTH * 0.35,
     ...Platform.select({
