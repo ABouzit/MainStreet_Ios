@@ -73,6 +73,7 @@ class ContainTabProfile extends Component {
     super(props);
 
     this.state = {
+      sportName: '',
       uploading: true,
       submit: false,
       imageHeight: '',
@@ -87,6 +88,7 @@ class ContainTabProfile extends Component {
       isChecked: false,
       isLoading: true,
       selectedTab: 0,
+      selectedTab2: 0,
       passwordNotVisible: true,
       oldPasswordNotVisible: true,
       pseudoValue: '',
@@ -116,6 +118,12 @@ class ContainTabProfile extends Component {
       backgroundColor: 'transparent',
       isVisible: false,
       spots: [],
+      sports: [],
+      sportActive: [],
+      sportDesactive: [],
+      preferences2: [],
+      preferences2Active: [],
+      preferences2Desactive: [],
       preferences: [
         {
           nom: 'BMX',
@@ -227,7 +235,7 @@ class ContainTabProfile extends Component {
       {oldPasswordValue: this.state.oldPasswordValue},
       constraintOldPwd,
     );
-
+    console.log(this.state.tabValidation);
     if (
       !(
         (this.state.tabValidation.indexOf('PasswordValue') === -1 &&
@@ -313,9 +321,9 @@ class ContainTabProfile extends Component {
   preferencesFromObjToTab() {
     let tab = [];
     return Promise.all(
-      this.state.preferences.map((sport, index) => {
-        if (sport.selected) {
-          tab.push(sport.nom);
+      this.state.sports.map((sport, index) => {
+        if (sport[1].selected) {
+          tab.push(sport[0]);
         }
       }),
     ).then(() => {
@@ -323,31 +331,30 @@ class ContainTabProfile extends Component {
       return Promise.resolve(tab);
     });
   }
+  preferenceFromSports() {
+    var tab = [];
+    return Promise.all(
+      this.state.sports.map((sport, index) => {
+        var tabi = [];
+        tabi.push(sport[0]);
+        tabi.push({selected: false});
+        tab.push(tabi);
+      }),
+    ).then(() => {
+      return tab;
+    });
+  }
   preferencesFromTabToObj() {
-    let tab = [false, false, false, false, false];
     console.log(this.state.user.preferences);
     return Promise.all(
-      this.state.user.preferences.map((sport, index) => {
-        if (sport === 'BMX') {
-          tab[0] = true;
-        } else if (sport === 'SKATEBOARD') {
-          tab[1] = true;
-        } else if (sport === 'ROLLER') {
-          tab[2] = true;
-        } else if (sport === 'SCOOTERS') {
-          tab[3] = true;
-        } else if (sport === 'AUTRE') {
-          tab[4] = true;
+      this.state.preferences2.map((sport, index) => {
+        if (this.state.user.preferences.indexOf(sport) > -1) {
+          this.state.sports[index][1].selected = true;
         }
       }),
     ).then(() => {
-      return Promise.all(
-        tab.map((sport, index) => {
-          this.state.preferences[index].selected = sport;
-        }),
-      ).then(() => {
-        return Promise.resolve(true);
-      });
+      console.log(this.state.sports);
+      return Promise.resolve(true);
     });
   }
 
@@ -391,15 +398,18 @@ class ContainTabProfile extends Component {
             numberLikes: 0,
           },
           () => {
+            this.getSport();
             firebase
               .database()
               .ref('/NEWDEV/spots/')
               .orderByChild('uid')
               .equalTo(this.state.user.uid)
               .once('value', snapshot => {
-                this.setState({spots: Object.entries(snapshot.val())}, () =>
-                  console.log(this.state.spots),
-                );
+                if (snapshot && snapshot.val()) {
+                  this.setState({spots: Object.entries(snapshot.val())}, () =>
+                    console.log(this.state.spots),
+                  );
+                }
               })
               .then(() => {
                 this.preferencesFromTabToObj().then(() => {
@@ -428,6 +438,73 @@ class ContainTabProfile extends Component {
         );
       }
     });
+  }
+  getSport() {
+    firebase
+      .database()
+      .ref('/NEWDEV/sports')
+      .orderByChild('active_userUid')
+      .startAt('true_')
+      .endAt('true_' + '\uf8ff')
+      .on('value', snapshot => {
+        console.log('********1');
+        if (snapshot && snapshot.val()) {
+          console.log(snapshot);
+          this.setState(
+            {
+              sportActive: Object.entries(snapshot.val()),
+              preferences2Active: Object.keys(snapshot.val()),
+            },
+            () =>
+              this.setState(
+                {
+                  sports: this.state.sportActive.concat(
+                    this.state.sportDesactive,
+                  ),
+                  preferences2: this.state.preferences2Active.concat(
+                    this.state.preferences2Desactive,
+                  ),
+                },
+                () =>
+                  this.preferenceFromSports().then(() =>
+                    this.preferencesFromTabToObj(),
+                  ),
+              ),
+          );
+        }
+      });
+    firebase
+      .database()
+      .ref('/NEWDEV/sports')
+      .orderByChild('active_userUid')
+      .equalTo('false_' + this.state.user.uid)
+      .on('value', snapshot2 => {
+        console.log('********2');
+        console.log(snapshot2);
+        if (snapshot2 && snapshot2.val()) {
+          this.setState(
+            {
+              sportDesactive: Object.entries(snapshot2.val()),
+              preferences2Desactive: Object.keys(snapshot2.val()),
+            },
+            () =>
+              this.setState(
+                {
+                  sports: this.state.sportActive.concat(
+                    this.state.sportDesactive,
+                  ),
+                  preferences2: this.state.preferences2Active.concat(
+                    this.state.preferences2Desactive,
+                  ),
+                },
+                () =>
+                  this.preferenceFromSports().then(() =>
+                    this.preferencesFromTabToObj(),
+                  ),
+              ),
+          );
+        }
+      });
   }
   updatePreference() {
     if (this.state.tabValidation.indexOf('preferences') !== -1) {
@@ -518,11 +595,11 @@ class ContainTabProfile extends Component {
   }
   functionAlertPreference(index) {
     let valide = false;
-    this.state.preferences[index].selected = !this.state.preferences[index]
+    this.state.sports[index][1].selected = !this.state.sports[index][1]
       .selected;
     Promise.all(
-      this.state.preferences.map((sport, index) => {
-        if (sport.selected === true) {
+      this.state.sports.map((sport, index) => {
+        if (sport[1].selected === true) {
           valide = true;
         }
       }),
@@ -670,6 +747,18 @@ class ContainTabProfile extends Component {
     //   });
     // });
   }
+  addSport() {
+    firebase
+      .database()
+      .ref('NEWDEV/sports/' + this.state.sportName)
+      .set({
+        nom: this.state.sportName,
+        userUid: this.state.user.uid,
+        active: true,
+        active_userUid: true + '_' + this.state.user.uid,
+      })
+      .then(() => this.setState({sportName: ''}));
+  }
   render() {
     const validationEmail = validate(
       {EmailValue: this.state.EmailValue},
@@ -710,7 +799,7 @@ class ContainTabProfile extends Component {
     let logo13 = {
       uri: require('./../../images/Logo1.png'),
     };
-    const {selectedTab} = this.state;
+    const {selectedTab, selectedTab2} = this.state;
     var controlPanel = (
       <MyControlPanel
         closeDrawer={() => {
@@ -1376,11 +1465,11 @@ class ContainTabProfile extends Component {
                     <View style={styles.preferenceView}>
                       <Text style={styles.titleText}>Mes Preference</Text>
                       <View style={styles.card}>
-                        {this.state.preferences.map((sport, index) => {
+                        {this.state.sports.map((sport, index) => {
                           return (
                             <View key={index} style={styles.cardLigne}>
                               <Text style={styles.cardLigneText}>
-                                {sport.nom}
+                                {sport[0]}
                               </Text>
                               <SwitchToggle
                                 containerStyle={{
@@ -1402,7 +1491,7 @@ class ContainTabProfile extends Component {
                                   shadowRadius: 5,
                                   elevation: 2,
                                 }}
-                                switchOn={sport.selected}
+                                switchOn={sport[1].selected}
                                 onPress={() => {
                                   this.functionAlertPreference(index);
                                   if (
@@ -1624,7 +1713,7 @@ class ContainTabProfile extends Component {
                           fontSize: 20,
                           color: 'rgb(248,223,81)',
                         }}>
-                        {this.state.profil.spots.length}
+                        {this.state.spots.length}
                       </Text>
                       <Text
                         style={{
@@ -1687,40 +1776,144 @@ class ContainTabProfile extends Component {
                 </Text>
                 <Text style={{fontWeight: 'bold', fontSize: 15}}>LIKES</Text>
               </View>
-              <View
-                style={{
-                  alignSelf: 'center',
-                  width: Metrics.WIDTH * 0.9,
-                  flexDirection: 'row',
-                  marginBottom: Metrics.HEIGHT * 0.03,
-                }}>
-                <FlatList
-                  data={this.state.spots}
-                  renderItem={({item}) => (
-                    <View style={{flex: 1, flexDirection: 'column', margin: 1}}>
-                      <TouchableOpacity
-                        onPress={() =>
-                          this.props.navigation.navigate('MyModal', {
-                            detailSpot: item,
-                          })
-                        }>
-                        <Image
-                          style={{
-                            height: Metrics.WIDTH * 0.43,
-                            width: Metrics.WIDTH * 0.43,
-                            marginLeft: Metrics.WIDTH * 0.015,
-                            marginBottom: Metrics.WIDTH * 0.015,
+              <View style={styles.TabsView2}>
+                <View style={styles.materialTabsView}>
+                  <MaterialTabs
+                    items={['Spots', 'Preferences']}
+                    selectedIndex={selectedTab2}
+                    onChange={index => {
+                      if (index !== 2) {
+                        this.setState({selectedTab2: index});
+                      }
+                    }}
+                    barColor="transparent"
+                    indicatorColor="rgb(57,90,255)"
+                    activeTextColor="#000"
+                    inactiveTextColor="#959595"
+                    uppercase={false}
+                  />
+                </View>
+              </View>
+              {this.state.selectedTab2 == 0 ? (
+                <View
+                  style={{
+                    alignSelf: 'center',
+                    width: Metrics.WIDTH * 0.9,
+                    flexDirection: 'row',
+                    marginBottom: Metrics.HEIGHT * 0.03,
+                  }}>
+                  <FlatList
+                    data={this.state.spots}
+                    renderItem={({item}) => (
+                      <View
+                        style={{flex: 1, flexDirection: 'column', margin: 1}}>
+                        <TouchableOpacity
+                          onPress={() =>
+                            this.props.navigation.navigate('MyModal', {
+                              detailSpot: item,
+                            })
+                          }>
+                          <Image
+                            style={{
+                              height: Metrics.WIDTH * 0.43,
+                              width: Metrics.WIDTH * 0.43,
+                              marginLeft: Metrics.WIDTH * 0.015,
+                              marginBottom: Metrics.WIDTH * 0.015,
+                            }}
+                            source={{uri: item[1].photos[0]}}
+                          />
+                        </TouchableOpacity>
+                      </View>
+                    )}
+                    //Setting the number of column
+                    numColumns={2}
+                    keyExtractor={(item, index) => index.toString()}
+                  />
+                </View>
+              ) : (
+                <View style={styles.cardParent}>
+                  <View style={styles.card3}>
+                    <View style={styles.itemNdBut}>
+                      <Item underline style={styles.itememail2}>
+                        {this.state.sportName === '' ? (
+                          <Ionicons
+                            active
+                            name="md-bicycle"
+                            size={35}
+                            style={{
+                              width: 40,
+                              color: 'rgb(159,159,159)',
+                            }}
+                          />
+                        ) : (
+                          () => {
+                            return '';
+                          }
+                        )}
+                        <Input
+                          placeholderTextColor="#000"
+                          textAlign={I18nManager.isRTL ? 'right' : 'left'}
+                          placeholder="Sport"
+                          keyboardType="default"
+                          style={styles.inputemail}
+                          value={this.state.sportName}
+                          onChangeText={sportName => {
+                            this.setState({sportName: sportName.toUpperCase()});
                           }}
-                          source={{uri: item[1].photos[0]}}
+                          uppercase={true}
+                        />
+                      </Item>
+                      <TouchableOpacity
+                        onPress={() => this.addSport()}
+                        style={[styles.publishBotton]}>
+                        <Ionicons
+                          active
+                          name="ios-add"
+                          size={30}
+                          style={styles.publishText}
                         />
                       </TouchableOpacity>
                     </View>
-                  )}
-                  //Setting the number of column
-                  numColumns={2}
-                  keyExtractor={(item, index) => index.toString()}
-                />
-              </View>
+                    <ScrollView style={{flex: 1}}>
+                      {console.log('hnni' + JSON.stringify(this.state.sport))}
+                      {this.state.sports.map((sport, index) => {
+                        return (
+                          <View key={index} style={styles.cardLigne}>
+                            <Text style={styles.cardLigneText}>
+                              {sport[1].nom}
+                            </Text>
+                            <View
+                              style={{
+                                justifyContent: 'center',
+                                width: Metrics.WIDTH * 0.21,
+                              }}>
+                              {sport[1].active === true ? (
+                                <TouchableOpacity
+                                  style={styles.followBgSelected}>
+                                  <MaterialIcons
+                                    name="done"
+                                    size={25}
+                                    color="white"
+                                  />
+                                </TouchableOpacity>
+                              ) : (
+                                <TouchableOpacity
+                                  style={styles.followBgNotSelected}>
+                                  <MaterialIcons
+                                    name="clear"
+                                    size={25}
+                                    color="rgb(57,90,255)"
+                                  />
+                                </TouchableOpacity>
+                              )}
+                            </View>
+                          </View>
+                        );
+                      })}
+                    </ScrollView>
+                  </View>
+                </View>
+              )}
             </Content>
           </Container>
         </Drawer>

@@ -21,6 +21,7 @@ import {
   Left,
   Body,
 } from 'native-base';
+import SwitchToggle from 'react-native-switch-toggle';
 import 'react-native-get-random-values';
 import {v4 as uuidv4} from 'uuid';
 import firebase from '@react-native-firebase/app';
@@ -36,11 +37,13 @@ import SliderEntryStyle from './../Components/SliderParallalax/SliderEntryStyle'
 import styles from './styles';
 import {Metrics, Fonts, ApplicationStyles, Colors} from '../../Themes';
 import AsyncStorage from '@react-native-community/async-storage';
+import { ScrollView } from 'react-native-gesture-handler';
 class PrendrePhoto extends Component {
   constructor(props) {
     super(props);
     this.state = {
       user: {},
+      activeSports: [],
       options: {
         title: 'Choisir Votre photo de profil.',
         noData: true,
@@ -56,38 +59,7 @@ class PrendrePhoto extends Component {
       },
       uploading: true,
       index: 0,
-      data: [
-        {
-          img: require('./../../images/BMX.jpg'),
-
-          sportName: 'BMX',
-          selected: true,
-        },
-        {
-          img: require('./../../images/skateboard.jpg'),
-
-          sportName: 'SKATEBOARD',
-          selected: false,
-        },
-        {
-          img: require('./../../images/Roller.jpg'),
-
-          sportName: 'ROLLER',
-          selected: false,
-        },
-        {
-          img: require('./../../images/scooter.jpg'),
-
-          sportName: 'SCOOTER',
-          selected: false,
-        },
-        {
-          img: require('./../../images/autre.jpg'),
-
-          sportName: 'AUTRE',
-          selected: false,
-        },
-      ],
+      data: [],
     };
   }
   getUser() {
@@ -99,12 +71,49 @@ class PrendrePhoto extends Component {
         this.setState(
           {
             user: JSON.parse(user),
-            uploading: false,
           },
           () => console.log(this.state.user),
         );
       }
     });
+  }
+  getSports() {
+    firebase
+      .database()
+      .ref('/NEWDEV/sports')
+      .orderByChild('active_userUid')
+      .startAt('true_')
+      .endAt('true_' + '\uf8ff')
+      .on('value', snapshot => {
+        console.log('********1');
+        if (snapshot && snapshot.val()) {
+          console.log(snapshot);
+          this.setState(
+            {
+              activeSports: Object.keys(snapshot.val()),
+            },
+            () =>
+              Promise.all(
+                this.state.activeSports.map((spo, index) => {
+                  if (index === 0) {
+                    this.state.data.push({
+                      sportName: spo,
+                      selected: true,
+                    });
+                  } else {
+                    this.state.data.push({
+                      sportName: spo,
+                      selected: false,
+                    });
+                  }
+                }),
+              ).then(() => {
+                console.log(this.state.data);
+                this.setState({uploading: false});
+              }),
+          );
+        }
+      });
   }
   componentWillMount() {
     var that = this;
@@ -113,6 +122,7 @@ class PrendrePhoto extends Component {
     });
     this.props.navigation.addListener('focus', () => {
       this.getUser();
+      this.getSports();
     });
   }
   pushPreference() {
@@ -125,7 +135,8 @@ class PrendrePhoto extends Component {
         }
       }),
     ).then(() => {
-      if (selectedTab !== []) {
+      console.log(selectedTab);
+      if (selectedTab.length > 0) {
         this.setState({uploading: true}, () => {
           console.log(
             JSON.stringify(this.state.user) + '/////////////////////////////',
@@ -157,38 +168,7 @@ class PrendrePhoto extends Component {
                     index: 0,
                     user: {},
                     uploading: false,
-                    data: [
-                      {
-                        img: require('./../../images/BMX.jpg'),
-
-                        sportName: 'BMX',
-                        selected: true,
-                      },
-                      {
-                        img: require('./../../images/skateboard.jpg'),
-
-                        sportName: 'SKATEBOARD',
-                        selected: false,
-                      },
-                      {
-                        img: require('./../../images/Roller.jpg'),
-
-                        sportName: 'ROLLER',
-                        selected: false,
-                      },
-                      {
-                        img: require('./../../images/scooter.jpg'),
-
-                        sportName: 'SCOOTER',
-                        selected: false,
-                      },
-                      {
-                        img: require('./../../images/autre.jpg'),
-
-                        sportName: 'AUTRE',
-                        selected: false,
-                      },
-                    ],
+                    data: [],
                   },
                   () => {
                     this.props.navigation.navigate('MenuPrincipale', {
@@ -200,6 +180,8 @@ class PrendrePhoto extends Component {
             })
             .catch(error => console.log(error));
         });
+      } else {
+        alert('Vos preferences doivents contenir au moin un sport');
       }
     });
   }
@@ -311,101 +293,68 @@ class PrendrePhoto extends Component {
             }}>
             <View
               style={{
-                marginTop: Metrics.HEIGHT * 0.05,
-                height: Metrics.HEIGHT * 0.5,
-                width: Metrics.WIDTH * 1,
+                height: Metrics.HEIGHT * 0.66,
                 alignItems: 'center',
+                justifyContent: 'center',
               }}>
-              <Swiper
-                showsButtons={false}
-                autoplay={false}
-                loop={false}
-                ref="swiper"
-                index={this.state.index}
-                paginationStyle={{
-                  position: 'absolute',
-                  top: -(Metrics.HEIGHT * 0.5),
-                }}
-                activeDot={<View style={styles.activeDot} />}
-                dot={<View style={styles.dot} />}
-                onIndexChanged={index => this.setState({index})}>
+              <View style={styles.card}>
+                <ScrollView style={{paddingBottom:20}}>
                 {this.state.data.map((sport, index) => {
                   return (
-                    <View
-                      style={{
-                        alignItems: 'center',
-                      }}
-                      key={index}>
-                      <SliderEntry
-                        data={{}}
-                        localImage={true}
-                        path={sport.img}
-                        parallax={true}
-                        containerStyle={
-                          SliderEntryStyle.imageContainerPreference
-                        }
-                        imageStyle={[
-                          SliderEntryStyle.image,
-                          {
-                            padding: Metrics.HEIGHT * 0.225,
-                          },
-                        ]}
-                        imageContainer={
-                          SliderEntryStyle.imageContainerPreference
-                        }
-                        type="Image"
+                    <View key={index} style={styles.cardLigne}>
+                      <Text style={styles.cardLigneText}>
+                        {sport.sportName}
+                      </Text>
+                      <SwitchToggle
+                        containerStyle={{
+                          width: Metrics.WIDTH * 0.13,
+                          height: Metrics.HEIGHT * 0.03,
+                          borderRadius: 25,
+
+                          padding: 0,
+                        }}
+                        circleStyle={{
+                          width: Metrics.HEIGHT * 0.04,
+                          height: Metrics.HEIGHT * 0.04,
+                          borderRadius: Metrics.HEIGHT * 0.06,
+                          borderColor: '#e5e5e5',
+                          borderWidth: 1,
+                          shadowOffset: {width: 0, height: 0},
+                          shadowColor: 'black',
+                          shadowOpacity: 1,
+                          shadowRadius: 5,
+                          elevation: 2,
+                        }}
+                        switchOn={sport.selected}
+                        onPress={() => {
+                          console.log(this.state.data[index].selected);
+                          console.log(!sport.selected);
+                          this.state.data[index].selected = !sport.selected;
+                          this.forceUpdate();
+                        }}
+                        circleColorOff="white"
+                        circleColorOn="rgb(4,170,24)"
+                        backgroundColorOn="rgb(255,214,78)"
+                        backgroundColorOff="rgb(159,159,159)"
+                        duration={500}
                       />
                     </View>
                   );
                 })}
-              </Swiper>
-              {this.state.data[this.state.index].selected ? (
-                <View
-                  style={{
-                    backgroundColor: 'transparent',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    width: Metrics.WIDTH * 0.1,
-                    height: Metrics.WIDTH * 0.1,
-                    position: 'absolute',
-                    bottom: Metrics.WIDTH * 0.2,
-                    right: Metrics.WIDTH * 0.15,
-                  }}>
-                  <FontAwesome
-                    name="check-circle"
-                    size={40}
-                    color={Colors.loginGreen}
-                    style={{
-                      backgroundColor: 'transparent',
-                      justifyContent: 'center',
-                    }}
-                  />
-                </View>
-              ) : (
-                <View />
-              )}
-              {/* <Text>{this.state.index}</Text>
-              <TouchableOpacity style={{backgroundColor:"red",height:40,width:40}} onPress={()=>this.setState({index:this.state.index+1})}><Text>+</Text></TouchableOpacity>
-              <TouchableOpacity style={{ backgroundColor: "red", height: 40, width: 40 }} onPress={() => this.setState({ index: this.state.index-1 })}><Text>-</Text></TouchableOpacity> */}
+                </ScrollView>
+              </View>
             </View>
             <View
               style={{
-                flex: 1,
+                height: Metrics.HEIGHT * 0.245,
                 backgroundColor: 'transparent',
                 width: Metrics.WIDTH * 1,
+                alignItems:"center",
+                justifyContent:"center"
               }}>
-              <Text
-                style={{
-                  fontSize: 35,
-                  textAlign: 'center',
-                  fontWeight: 'bold',
-                }}>
-                {this.state.data[this.state.index].sportName}
-              </Text>
               <View
                 style={{
                   backgroundColor: 'transparent',
-                  flex: 1,
                   width: '100%',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -416,27 +365,9 @@ class PrendrePhoto extends Component {
                     width: '100%',
                     backgroundColor: 'transparent',
                     flexDirection: 'row',
-                    justifyContent: 'space-around',
+                    justifyContent: 'center',
+                    alignItems:"center"
                   }}>
-                  {this.state.data[this.state.index].selected ? (
-                    <TouchableOpacity
-                      onPress={() => {
-                        this.state.data[this.state.index].selected = false;
-                        this.forceUpdate();
-                      }}
-                      style={styles.publishBotton2}>
-                      <Text style={styles.publishText2}>SELECTIONNER</Text>
-                    </TouchableOpacity>
-                  ) : (
-                    <TouchableOpacity
-                      onPress={() => {
-                        this.state.data[this.state.index].selected = true;
-                        this.forceUpdate();
-                      }}
-                      style={styles.publishBotton}>
-                      <Text style={styles.publishText}>SELECTIONNER</Text>
-                    </TouchableOpacity>
-                  )}
                   <TouchableOpacity
                     onPress={() => this.pushPreference()}
                     style={styles.publishBotton}>

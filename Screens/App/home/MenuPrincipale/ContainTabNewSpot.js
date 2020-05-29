@@ -57,6 +57,7 @@ class ContainTabNewSpot extends Component {
       latitude: '',
       longitude: '',
       index: '',
+      activeSports: [],
       activeindicator: 0,
       indexSlider: '',
       LocationValue: '',
@@ -87,8 +88,29 @@ class ContainTabNewSpot extends Component {
     this.props.navigation.addListener('focus', () => {
       this.getUser();
       this.initPositions();
+      this.getSports();
       subscriber.next(true);
     });
+  }
+  getSports() {
+    firebase
+      .database()
+      .ref('/NEWDEV/sports')
+      .orderByChild('active_userUid')
+      .startAt('true_')
+      .endAt('true_' + '\uf8ff')
+      .on('value', snapshot => {
+        console.log('********1');
+        if (snapshot && snapshot.val()) {
+          console.log(snapshot);
+          this.setState(
+            {
+              activeSports: Object.keys(snapshot.val()),
+            },
+            () => console.log(this.state.activeSports),
+          );
+        }
+      });
   }
   getUser() {
     console.log('///dkhl Pref');
@@ -142,19 +164,19 @@ class ContainTabNewSpot extends Component {
   _renderSportItem = ({item}) => (
     <TouchableOpacity
       style={
-        this.state.selectedSportLots.includes(item.musicname)
+        this.state.selectedSportLots.includes(item)
           ? [styles.txtBg, styles.selectedButton]
           : [styles.txtBg, {backgroundColor: 'white'}]
       }
-      onPress={() => this.onSelectedSport(item.musicname)}>
+      onPress={() => this.onSelectedSport(item)}>
       <Text
         style={
-          this.state.selectedSportLots.includes(item.musicname)
+          this.state.selectedSportLots.includes(item)
             ? [styles.musicname, {color: '#fff'}]
             : [styles.musicname, {color: '#000'}]
         }>
         {' '}
-        {item.musicname}
+        {item}
       </Text>
     </TouchableOpacity>
   );
@@ -272,6 +294,7 @@ class ContainTabNewSpot extends Component {
                   res.data.results[0].components.suburb,
                 ville: res.data.results[0].components.city,
                 uploading: false,
+                pays: res.data.results[0].components.country,
               },
               () => {
                 subscriber.next(false);
@@ -452,6 +475,7 @@ class ContainTabNewSpot extends Component {
                                     longitude: this.state.longitude,
                                     uid: this.state.user.uid,
                                     ville: this.state.ville,
+                                    pays: this.state.pays,
                                     trans: this.state.selectedTranLots,
                                     disponibilite: this.state.selectedTimeLots,
                                     sports: this.state.selectedSportLots,
@@ -625,8 +649,10 @@ class ContainTabNewSpot extends Component {
               }}>
               <FlatList
                 contentContainerStyle={styles.listContent}
-                data={sportData}
-                keyExtractor={sportData => sportData.id}
+                data={this.state.activeSports}
+                keyExtractor={sportData =>
+                  this.state.activeSports.indexOf(sportData)
+                }
                 renderItem={this._renderSportItem}
                 horizontal
                 showsHorizontalScrollIndicator={false}

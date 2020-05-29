@@ -31,7 +31,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import style from './Screens/App/home/DetailsCommentsModal/styles';
-const Drawer = createDrawerNavigator();
+const Drawer = createStackNavigator();
 const MainStack = createStackNavigator();
 const RootStack = createStackNavigator();
 function MainStackScreen() {
@@ -54,7 +54,7 @@ function RootStackScreen() {
 }
 function DrawerScreen() {
   return (
-    <Drawer.Navigator initialRouteName="ConnexionPage">
+    <Drawer.Navigator initialRouteName="ConnexionPage" headerMode="none">
       <Drawer.Screen
         name="Home"
         component={PrivacyPolicy}

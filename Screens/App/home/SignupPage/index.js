@@ -123,10 +123,16 @@ class SignupPage extends Component {
         .catch(error => {
           if (error.code === 'auth/email-already-in-use') {
             alert('That email address is already in use!');
+            this.setState({
+              uploading: false,
+            });
           }
 
           if (error.code === 'auth/invalid-email') {
             alert('That email address is invalid!');
+            this.setState({
+              uploading: false,
+            });
           }
         });
     });

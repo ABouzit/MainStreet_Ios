@@ -197,7 +197,7 @@ class LoginPage extends Component {
           <Right style={styles.right}>
             <TouchableOpacity
               info
-              onPress={() => this.props.navigation.replace('SignupPage')}>
+              onPress={() => this.props.navigation.navigate('SignupPage')}>
               <Text style={styles.textTitle}>Sign up</Text>
             </TouchableOpacity>
           </Right>

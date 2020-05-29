@@ -15,6 +15,27 @@ const styles = StyleSheet.create({
     paddingLeft: Metrics.WIDTH * 0.05,
     paddingRight: Metrics.WIDTH * 0.05,
   },
+  followBgNotSelected: {
+    width: Metrics.HEIGHT * 0.04,
+    height: Metrics.HEIGHT * 0.04,
+    borderRadius: Metrics.HEIGHT * 0.045,
+    borderWidth: 2,
+    borderColor: 'rgb(57,90,255)',
+    marginLeft: Metrics.WIDTH * 0.03,
+    justifyContent: 'center',
+    alignSelf: 'center',
+    alignItems: 'center',
+  },
+  followBgSelected: {
+    width: Metrics.HEIGHT * 0.04,
+    height: Metrics.HEIGHT * 0.04,
+    borderRadius: Metrics.HEIGHT * 0.045,
+    backgroundColor: 'rgb(57,90,255)',
+    marginLeft: Metrics.WIDTH * 0.03,
+    justifyContent: 'center',
+    alignSelf: 'center',
+    alignItems: 'center',
+  },
   backArrow: {
     justifyContent: 'center',
     alignItems: 'center',
@@ -56,6 +77,14 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     width: Metrics.WIDTH * 0.8,
     alignSelf: 'center',
+  },
+  TabsView2: {
+    borderColor: 'rgb(197,185,121)',
+    borderBottomWidth: 1,
+    width: Metrics.WIDTH * 0.87,
+    alignSelf: 'center',
+    marginBottom: 20,
+    marginTop: -30,
   },
   cardLigne: {
     marginTop: Metrics.HEIGHT * 0.04,
@@ -100,6 +129,16 @@ const styles = StyleSheet.create({
   itememail: {
     alignSelf: 'center',
     width: Metrics.WIDTH * 0.7,
+    height: Metrics.HEIGHT * 0.08,
+  },
+  itemNdBut:{
+    flexDirection:"row",
+    justifyContent:"space-around",
+    alignItems:"center",
+    marginTop:10
+  },
+  itememail2: {
+    width: Metrics.WIDTH * 0.6,
     height: Metrics.HEIGHT * 0.08,
   },
   itemeNom: {
@@ -208,6 +247,46 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     elevation: 3,
     marginLeft: -Metrics.WIDTH * 0.15,
+    //backgroundColor:'green',
+    marginBottom: Metrics.HEIGHT * 0.04,
+    paddingBottom: Metrics.HEIGHT * 0.04,
+  },
+  cardParent: {
+    height: Metrics.HEIGHT * 0.507,
+    width: Metrics.WIDTH,
+  },
+  publishBotton: {
+    backgroundColor: 'rgb(255,213,0)',
+    width: Metrics.WIDTH * 0.38,
+    
+    ...Platform.select({
+      ios: {
+        height: Metrics.HEIGHT * 0.05,
+        width: Metrics.HEIGHT * 0.05,
+      },
+      android: {
+        height: Metrics.HEIGHT * 0.06,
+        width: Metrics.HEIGHT * 0.06,
+      },
+    }),
+    justifyContent: 'center',
+  },
+  publishText: {
+    fontFamily: Fonts.type.sfuiDisplayMedium,
+    color: 'black',
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+  card3: {
+    alignSelf: 'center',
+    width: Metrics.WIDTH * 0.9,
+    backgroundColor: 'white',
+    shadowOffset: {width: 0, height: 0},
+    shadowColor: 'black',
+    shadowOpacity: 1,
+    shadowRadius: 5,
+    elevation: 3,
+    height: Metrics.HEIGHT * 0.506,
     //backgroundColor:'green',
     marginBottom: Metrics.HEIGHT * 0.04,
     paddingBottom: Metrics.HEIGHT * 0.04,
